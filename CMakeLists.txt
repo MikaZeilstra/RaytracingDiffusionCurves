@@ -352,7 +352,6 @@ function(OPTIX_add_sample_executable target_name_base target_name_var)
   target_link_libraries( ${target_name}
     ${GLFW_LIB_NAME}
     imgui
-    sutil_7_sdk
     )
 
   set_target_properties( ${target_name} PROPERTIES
@@ -377,12 +376,7 @@ endfunction()
 # and the CMakeLists.txt file.
 
 add_subdirectory( optixHello             ) 
-add_subdirectory( optixCurves) 
 
-# Our sutil library.  The rules to build it are found in the subdirectory.
-add_subdirectory(sutil)
-# Our other libraries.
-add_subdirectory( lib/DemandLoading )
 # Third-party support libraries.
 add_subdirectory(support)
 
