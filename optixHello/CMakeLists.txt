@@ -29,16 +29,19 @@ set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/helperKernels.cu
     PROPERTIES CUDA_SOURCE_PROPERTY_FORMAT OBJ
 )
 
+cuda_compile_and_embed(embedded_ptx_code deviceCode.cu)
 
 OPTIX_add_sample_executable( optixHello target_name
   deviceCode.cu
+  ${embedded_ptx_code}
   optixHello.cpp
   optixHello.h
   params.h
   helperKernels.cu
-  )
+)
 
 target_link_libraries( ${target_name}
   ${CUDA_LIBRARIES}
   ${CUDA_nvrtc_LIBRARY}
 )
+

@@ -52,23 +52,6 @@
 #include <GLFW/glfw3.h>
 #include <cuda_gl_interop.h>
 
-#ifndef CUDA_NVRTC_OPTIONS
-#define CUDA_NVRTC_OPTIONS  \
-  "-std=c++11", \
-  "-arch", \
-  "compute_60", \
-  "-use_fast_math", \
-  "-lineinfo", \
-  "-default-device", \
-  "-rdc", \
-  "true", \
-  "-D__x86_64",\
-  "-I C:/Users/Mika/source/repos/SDK/optixHello/",\
-  "-I C:/Users/Mika/source/repos/SDK/cuda/",\
-  "-I C:/ProgramData/NVIDIA Corporation/OptiX SDK 7.3.0/include/",\
-  "-I C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.3/include/"
-#define NUMBER_OF_CUDA_NVRTC_OPTIONS 13
-#endif 
 #ifndef CALL_CHECK
 #define CALL_CHECK(call) \
     if(call != 0){          \
@@ -79,7 +62,7 @@
 
 extern "C" __host__ void setFloatDevice(float* dest, unsigned int n, float src);
 
-
+ extern "C" char embedded_ptx_code[];
 
 
 template <typename T>
@@ -114,7 +97,7 @@ int main(int argc, char* argv[]){
     
     GLFWwindow* window;
     
-    
+    //printf("ptx string :  %s", embedded_ptx_code);
 
     //Setup window
     glfwInit();
@@ -180,7 +163,11 @@ int main(int argc, char* argv[]){
     unsigned int n_colors_left = 0;
     unsigned int n_colors_right = 0;
 
-    rapidxml::file<> xmlFile("C:/Users/Mika/source/repos/SDK/optixHello/lady_bug.xml");
+    std::string file = std::string("/behindthecurtain.xml");
+
+        
+
+    rapidxml::file<> xmlFile((std::filesystem::current_path().generic_string() + file).c_str());
     rapidxml::xml_document<> doc;
     doc.parse<0>(xmlFile.data());
     rapidxml::xml_node<>* curve_set = doc.first_node();
@@ -443,53 +430,6 @@ int main(int argc, char* argv[]){
     // inputs, since they are not needed by our trivial shading method
     CALL_CHECK(cudaFree(reinterpret_cast<void*>(d_temp_buffer_gas)));
 
-
-
-    size_t      inputSize = 0;
-    size_t logsize;
-
-    std::string devicecode;
-
-    std::string devicecodeLocation = "C:/Users/Mika/source/repos/SDK/optixHello/deviceCode.cu";
-
-    //Read DeviceCode for compilation
-    if (loadSource(devicecode, devicecodeLocation)) {
-        //std::cout << devicecode << std::endl;
-    }
-    else {
-        std::cerr << "Could Not read devicecode" << std::endl;
-    }
-
-
-    //Compile Devicecode
-    nvrtcProgram prog;
-    nvrtcCreateProgram(&prog, devicecode.c_str(), "test", 0, NULL, NULL);
-
-    const char* compiler_options[] = { CUDA_NVRTC_OPTIONS };
-    nvrtcCompileProgram(prog, NUMBER_OF_CUDA_NVRTC_OPTIONS , compiler_options);
-                
-    std::string compileLog;
-    size_t Compilelog_size = 0;
-    nvrtcGetProgramLogSize(prog, &Compilelog_size);
-    compileLog.resize(Compilelog_size);
-    nvrtcGetProgramLog(prog, &compileLog[0]);
-
-    if (Compilelog_size > 1) {
-        std::cout << compileLog << std::endl;
-    }
-    
-
-    size_t ptxSize;
-    std::string ptx;
-
-    nvrtcGetPTXSize(prog, &ptxSize);
-    ptx.resize(ptxSize);
-
-    nvrtcGetPTX(prog, &ptx[0]);
-
-    nvrtcDestroyProgram(&prog);
-
-
     //Setup Modules
     OptixModule module = nullptr;
 
@@ -510,12 +450,14 @@ int main(int argc, char* argv[]){
     pipeline_compile_options.pipelineLaunchParamsVariableName = "params";
     pipeline_compile_options.usesPrimitiveTypeFlags = OPTIX_PRIMITIVE_TYPE_FLAGS_ROUND_CUBIC_BSPLINE;
 
+    const std::string ptxCode = embedded_ptx_code;
+
     CALL_CHECK(optixModuleCreateFromPTX(
         context,
         &module_compile_options,
         &pipeline_compile_options,
-        ptx.c_str(),
-        ptxSize,
+        ptxCode.c_str(),
+        ptxCode.size(),
         log,
         &sizeof_log,
         &module

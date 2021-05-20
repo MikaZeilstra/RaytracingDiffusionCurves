@@ -84,7 +84,7 @@ project(DiffusionRays LANGUAGES CXX)
 # This enforces a particular version of CMake that we require to process the script files
 # properly.  We rely on CXX_STANDARD, which was added in CMake 3.1.
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -134,6 +134,8 @@ include(Macros)
 include (CompilerInfo)
 # Check for specific machine/compiler options.
 include (ConfigCompilerFlags)
+
+include (configure_optix)
 
 # Turn off the warning that NVCC issues when generating PTX from our CUDA samples.  This
 # is a custom extension to the FindCUDA code distributed by CMake.
@@ -386,4 +388,4 @@ add_subdirectory(support)
 # Now that everything is done, indicate that we have finished configuring at least once.
 # We use this variable to set certain defaults only on the first pass, so that we don't
 # continually set them over and over again.
-set(PASSED_FIRST_CONFIGURE ON CACHE INTERNAL "Already Configured once?")
+#set(PASSED_FIRST_CONFIGURE ON CACHE INTERNAL "Already Configured once?")
