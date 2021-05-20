@@ -1,0 +1,25 @@
+<!DOCTYPE CurveSetXML>
+<curve_set image_width="512" image_height="512" nb_curves="1" >
+ <curve nb_control_points="4" nb_left_colors="3" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="128" y="256.1" />
+   <control_point x="256" y="256.1" />
+   <control_point x="256.1" y="256.1" />
+   <control_point x="384" y="256.1" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="0" R="255" globalID="0" B="0" />
+   <left_color G="255" R="255" globalID="3.3" B="0" />
+   <left_color G="255" R="255" globalID="6.6" B="0" />
+   <left_color G="0" R="255" globalID="10" B="0" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="0" R="0" globalID="0" B="255" />
+   <right_color G="0" R="0" globalID="10" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+</curve_set>

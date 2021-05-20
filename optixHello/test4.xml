@@ -1,0 +1,140 @@
+<!DOCTYPE CurveSetXML>
+<curve_set image_width="512" image_height="512" nb_curves="1" >
+ <curve nb_control_points="121" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="79" y="69" />
+   <control_point x="167.5957066999724" y="60.02828286582559" />
+   <control_point x="252.2791574691971" y="57.82257101974136" />
+   <control_point x="341" y="69" />
+   <control_point x="341.3808821420748" y="69.04798515175747" />
+   <control_point x="444.749412375387" y="89.6252938123065" />
+   <control_point x="400" y="112" />
+   <control_point x="326.4144275602436" y="148.7927862198782" />
+   <control_point x="246.2023226165933" y="137.1880832207127" />
+   <control_point x="167" y="140" />
+   <control_point x="163.0415774868884" y="140.1405357105247" />
+   <control_point x="58.6917288515275" y="161.1699391368122" />
+   <control_point x="79" y="173" />
+   <control_point x="189.1832545285043" y="237.1844201136918" />
+   <control_point x="252.2569147451428" y="173.0921015124097" />
+   <control_point x="358" y="211" />
+   <control_point x="410.8138691109308" y="229.9332738322205" />
+   <control_point x="338.5750512670332" y="252.9264704513224" />
+   <control_point x="322" y="257" />
+   <control_point x="238.5212168313701" y="277.5159721346633" />
+   <control_point x="143.7174067861255" y="248.9287630697338" />
+   <control_point x="66" y="282" />
+   <control_point x="12.82879394454989" y="304.6260451299788" />
+   <control_point x="149.5500019650697" y="339.9075221412838" />
+   <control_point x="160" y="340" />
+   <control_point x="231.9690793067317" y="340.6368945071392" />
+   <control_point x="302.1954917288715" y="305.3356393383097" />
+   <control_point x="373" y="311" />
+   <control_point x="419.791153935186" y="314.7432923148149" />
+   <control_point x="321.1160896020576" y="360.3979281383224" />
+   <control_point x="305" y="360" />
+   <control_point x="228.774481074822" y="358.1178884216005" />
+   <control_point x="160.3293196744502" y="353.4176700813875" />
+   <control_point x="86" y="372" />
+   <control_point x="51.79168838738156" y="380.5520779031546" />
+   <control_point x="44.07943768732559" y="408.8908043519066" />
+   <control_point x="79" y="432" />
+   <control_point x="141.1739605652436" y="473.1445327269994" />
+   <control_point x="200.8712115678993" y="429.3512822385571" />
+   <control_point x="261" y="409" />
+   <control_point x="299.2587531314703" y="396.0508835555024" />
+   <control_point x="351.8309709745093" y="386.3759899041772" />
+   <control_point x="391" y="400" />
+   <control_point x="417.3031005965659" y="409.1489045553273" />
+   <control_point x="356.5826961638588" y="452.1593714202222" />
+   <control_point x="329" y="456" />
+   <control_point x="258.8856704835837" y="465.7627547427921" />
+   <control_point x="182.0686877461467" y="473.667146636482" />
+   <control_point x="111" y="480" />
+   <control_point x="22.94631691962326" y="487.8463677992415" />
+   <control_point x="109.6743600465526" y="502" />
+   <control_point x="139" y="502" />
+   <control_point x="257.8792339896267" y="502" />
+   <control_point x="320.486920789947" y="538.2770298024752" />
+   <control_point x="323" y="421" />
+   <control_point x="325.4946090291033" y="304.5849119751786" />
+   <control_point x="335.764226315849" y="185.4674710530185" />
+   <control_point x="318" y="70" />
+   <control_point x="315.7667632449353" y="55.48396109207897" />
+   <control_point x="282.9057214532098" y="-12.59579494136966" />
+   <control_point x="261" y="26" />
+   <control_point x="225.609734897562" y="88.35427660905748" />
+   <control_point x="258.2356557651125" y="262.9062896782277" />
+   <control_point x="263" y="310" />
+   <control_point x="268.9153344029018" y="368.4708054440679" />
+   <control_point x="285.2940373321301" y="429.6033226723819" />
+   <control_point x="273" y="488" />
+   <control_point x="269.9306786557598" y="502.5792763851411" />
+   <control_point x="260.4325547729973" y="539.4526239599413" />
+   <control_point x="243" y="500" />
+   <control_point x="200.8937309473181" y="404.7068647755094" />
+   <control_point x="246.0785787372397" y="285.8060327493116" />
+   <control_point x="228" y="182" />
+   <control_point x="219.204388512635" y="131.4961662983558" />
+   <control_point x="201.8492457313457" y="-5.039743402988847" />
+   <control_point x="174" y="38" />
+   <control_point x="144.9921553022754" y="82.83030544193804" />
+   <control_point x="172.3507511417406" y="172.276883772515" />
+   <control_point x="175" y="219" />
+   <control_point x="179.9236094333001" y="305.8345663691113" />
+   <control_point x="190.4715361119028" y="408.5497294319363" />
+   <control_point x="185" y="495" />
+   <control_point x="183.0655216195674" y="525.5647584108357" />
+   <control_point x="157.1321331790863" y="501.4761474626058" />
+   <control_point x="155" y="492" />
+   <control_point x="126.6205242131398" y="365.8689965028434" />
+   <control_point x="155.6726646406953" y="229.8062817321046" />
+   <control_point x="155" y="102" />
+   <control_point x="154.8572799003698" y="74.88318107025467" />
+   <control_point x="148.0213220881557" y="24.01184560453095" />
+   <control_point x="121" y="9" />
+   <control_point x="92.61418105847338" y="-6.769899411959216" />
+   <control_point x="110.7459715188968" y="73.55201305145377" />
+   <control_point x="112" y="106" />
+   <control_point x="116.303021628888" y="217.3406846474759" />
+   <control_point x="113.2406082084702" y="331.145974618912" />
+   <control_point x="120" y="442" />
+   <control_point x="122.9171743099658" y="489.8416586834396" />
+   <control_point x="145.8647369642595" y="535.4366824202614" />
+   <control_point x="92" y="496" />
+   <control_point x="23.73411696335063" y="446.0196213481674" />
+   <control_point x="39.08373633781517" y="313.7729712554645" />
+   <control_point x="38" y="252" />
+   <control_point x="36.89617268679933" y="189.0818431475618" />
+   <control_point x="14.9735679666166" y="28.65892081126688" />
+   <control_point x="91" y="3" />
+   <control_point x="139.8708604956073" y="-13.49391541726749" />
+   <control_point x="220.5263118550151" y="12.80566790810482" />
+   <control_point x="264" y="14" />
+   <control_point x="307.0254820277113" y="15.18201873702503" />
+   <control_point x="364.7812901146947" y="-14.32806482795792" />
+   <control_point x="395" y="31" />
+   <control_point x="455.4869506874085" y="121.7304260311127" />
+   <control_point x="445.0484419454604" y="160.5266924062317" />
+   <control_point x="449" y="276" />
+   <control_point x="449.9588966148573" y="304.0210899674986" />
+   <control_point x="472.4922626655003" y="433.8681961921424" />
+   <control_point x="443" y="476" />
+   <control_point x="422.5751545579046" y="505.1783506315648" />
+   <control_point x="381.5725475143857" y="502" />
+   <control_point x="352" y="502" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="255" R="255" globalID="400" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="25" R="25" globalID="0" B="130" />
+   <right_color G="25" R="25" globalID="400" B="130" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="400" />
+  </blur_points_set>
+ </curve>
+</curve_set>

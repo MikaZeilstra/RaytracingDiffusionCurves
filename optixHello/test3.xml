@@ -1,0 +1,101 @@
+<!DOCTYPE CurveSetXML>
+<curve_set image_width="512" image_height="512" nb_curves="3" >
+ <curve nb_control_points="19" nb_left_colors="2" nb_right_colors="4" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="115" y="181" />
+   <control_point x="108.7747679223377" y="146.7612235728575" />
+   <control_point x="139.9594076007266" y="110.3696556938185" />
+   <control_point x="170" y="98" />
+   <control_point x="192.0141465379804" y="88.93535142553748" />
+   <control_point x="262.0048175203079" y="82.07212652301558" />
+   <control_point x="284" y="107" />
+   <control_point x="303.6455528955204" y="129.2649599482564" />
+   <control_point x="293.6281621538314" y="183.7116355282175" />
+   <control_point x="273" y="201" />
+   <control_point x="263.5226050176656" y="208.9429596042422" />
+   <control_point x="168.0054126972352" y="282.3380243376038" />
+   <control_point x="133" y="252" />
+   <control_point x="114.8128292801217" y="236.2377853761055" />
+   <control_point x="102.5267887714487" y="197.0089181770746" />
+   <control_point x="109" y="175" />
+   <control_point x="109.7345964801689" y="172.5023719674257" />
+   <control_point x="112.3333333333333" y="171" />
+   <control_point x="114" y="169" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="255" R="255" globalID="60" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="25" R="25" globalID="0" B="130" />
+   <right_color G="0" R="255" globalID="20" B="170" />
+   <right_color G="85" R="255" globalID="33" B="0" />
+   <right_color G="25" R="25" globalID="60" B="130" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="60" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="373" y="135" />
+   <control_point x="364.5892917880896" y="212.0981586091784" />
+   <control_point x="365.7226714006363" y="291.6786465472955" />
+   <control_point x="348" y="367" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="255" R="255" globalID="10" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="25" R="25" globalID="0" B="130" />
+   <right_color G="25" R="25" globalID="10" B="130" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="22" nb_left_colors="4" nb_right_colors="3" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="124" y="387" />
+   <control_point x="177.2488623741749" y="333.7511376258251" />
+   <control_point x="179.4384333122826" y="374.8955227892906" />
+   <control_point x="233" y="420" />
+   <control_point x="278.4048987258855" y="458.2357041902193" />
+   <control_point x="256.1564077112431" y="373.5418769483241" />
+   <control_point x="249" y="364" />
+   <control_point x="232.8754845034029" y="342.5006460045372" />
+   <control_point x="227.6725119978289" y="414.6723121425982" />
+   <control_point x="209" y="434" />
+   <control_point x="146.2120150389183" y="498.9910721526986" />
+   <control_point x="87.20222828172746" y="381.4121239200556" />
+   <control_point x="77" y="350" />
+   <control_point x="55.16740209435628" y="282.7785801326233" />
+   <control_point x="157.8942428388049" y="326.6370556494987" />
+   <control_point x="166" y="327" />
+   <control_point x="197.8431013396718" y="328.4258105077465" />
+   <control_point x="196.5737381035418" y="285.0382492069028" />
+   <control_point x="226" y="287" />
+   <control_point x="227.199188516183" y="287.0799459010789" />
+   <control_point x="228" y="288.3333333333333" />
+   <control_point x="229" y="289" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="85" R="0" globalID="4" B="85" />
+   <left_color G="85" R="0" globalID="32" B="170" />
+   <left_color G="255" R="255" globalID="70" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="25" R="25" globalID="0" B="130" />
+   <right_color G="25" R="25" globalID="5" B="130" />
+   <right_color G="25" R="25" globalID="70" B="130" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="70" />
+  </blur_points_set>
+ </curve>
+</curve_set>

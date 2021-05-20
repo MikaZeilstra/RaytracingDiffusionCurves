@@ -35,6 +35,7 @@
 
 
 #include <cuda_runtime.h>
+#include <cuda.h>
 #include <nvrtc.h>
 
 
@@ -45,13 +46,11 @@
 #include <vector>
 #include <fstream>
 #include <array>
+#include <chrono>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <cuda_gl_interop.h>
-
-
-
 
 #ifndef CUDA_NVRTC_OPTIONS
 #define CUDA_NVRTC_OPTIONS  \
@@ -78,7 +77,7 @@
     }
 #endif // !
 
-
+extern "C" __host__ void setFloatDevice(float* dest, unsigned int n, float src);
 
 
 
@@ -97,19 +96,24 @@ typedef SbtRecord<HitGroupData>   HitGroupSbtRecord;
 GLuint pbo;
 
 int main(int argc, char* argv[]){
+
     const int width = 512;
     const int height = 512;
     const float zoom_factor = 1;
     const float offset_x = 0;
     const float offset_y = 0;
     const int number_of_rays = 128;
+    
+    const float curve_width = 1e-3f;
 
+    auto start_time = std::chrono::high_resolution_clock::now();
 
     
 
     Params params{};
     
     GLFWwindow* window;
+    
     
 
     //Setup window
@@ -148,29 +152,136 @@ int main(int argc, char* argv[]){
     
     OptixDeviceContext context = nullptr;
 
-
+    CUstream stream;
+    CALL_CHECK(cudaStreamCreate(&stream));
 
 	optixDeviceContextCreate(cuCtx, &Context_options, &context);
 	
+    //Load curves 
+    std::vector<float3> vertices = {};
+    std::vector<unsigned int> curve_map = {};
+    std::vector<unsigned int> curve_index = {};
 
-    const std::array<float3, 6> vertices =
-    { {
-          {  128,-128, 0}, //Phantom point to connect to 1st control point
+    std::vector<uint2> color_left_index{};
+    std::vector<float3> color_left = {};
+    std::vector<float> color_left_u = {};
 
-          {  128, 128, 0},
-          {  128, 384, 0},
-          {  384, 384, 0},
-          {  384, 128, 0},
-          {  384,-128, 0} //Phantom point to connect to last control point
-    } };
-
-  
-    
+    std::vector<uint2> color_right_index{};
+    std::vector<float3> color_right = {};
+    std::vector<float> color_right_u = {};
+    std::vector<unsigned int> segmentIndices;
 
 
-    const std::array<float, 6> widths = { {0.5,0.5,0.5,0.5,0.5,0.5} };
 
-    const std::array<unsigned int, 3> segmentIndices = { 0,1,2 };    
+    int current_segment = 0;
+    int current_curve = 0;
+    int current_curve_segment = 0;
+
+    unsigned int n_colors_left = 0;
+    unsigned int n_colors_right = 0;
+
+    rapidxml::file<> xmlFile("C:/Users/Mika/source/repos/SDK/optixHello/lady_bug.xml");
+    rapidxml::xml_document<> doc;
+    doc.parse<0>(xmlFile.data());
+    rapidxml::xml_node<>* curve_set = doc.first_node();
+    rapidxml::xml_node<>* set_node;
+
+    for (rapidxml::xml_node<>* curve = curve_set->first_node(); curve; curve = curve->next_sibling()) {
+        current_curve_segment = 0;
+        set_node = curve->first_node("control_points_set",18);
+
+        //Data is using bezier splines thus we need phantom points.
+        rapidxml::xml_node<>* control_point = set_node->first_node();
+        float y_pos;
+        float x_pos;
+        while ( control_point->next_sibling()) {
+            vertices.push_back({ 0,0,0 });
+
+            //Insert the 4 vertexes of the spline
+            pushPoint(control_point, vertices);
+            control_point = control_point->next_sibling();
+            pushPoint(control_point, vertices);
+            control_point = control_point->next_sibling();
+            pushPoint(control_point, vertices);
+            control_point = control_point->next_sibling();
+            pushPoint(control_point, vertices);
+
+            //Calculate phantom points
+
+            vertices.at(current_segment) = {
+                2 * vertices.at(current_segment + 1).x - vertices.at(current_segment + 2).x,
+                2 * vertices.at(current_segment + 1).y - vertices.at(current_segment + 2).y,
+                0
+            };
+
+
+            vertices.push_back({
+                2 * vertices.at(current_segment + 4).x - vertices.at(current_segment + 3).x,
+                2 * vertices.at(current_segment + 4).y - vertices.at(current_segment + 3).y,
+                0
+            });
+
+            segmentIndices.push_back(current_segment++);
+            segmentIndices.push_back(current_segment++);
+            segmentIndices.push_back(current_segment++);
+            current_segment += 3;
+
+            curve_map.push_back(current_curve);
+            curve_index.push_back(current_curve_segment++);
+        }
+
+        set_node = curve->first_node("left_colors_set",15);
+        color_left_index.push_back({ n_colors_left ,0 });
+        rapidxml::xml_node<>* color_node = set_node->first_node();
+
+        while (color_node) {
+            float u = 0;
+            pushColor(color_node, color_left_index, color_left_u, color_left);
+            u = color_left_u.back();
+            color_node = color_node->next_sibling();
+        }
+        //Make sure there is a color value for the last parameter value of the curve if we are using a diffusion curve save
+        if (USE_DIFFUSION_CURVE_SAVE) {
+            color_left.push_back(color_left.back());
+            color_left_index.back().y++;
+            color_left_u.push_back(current_curve_segment);
+        }
+
+        n_colors_left += color_left_index.back().y;
+
+        set_node = curve->first_node("right_colors_set", 16);
+        color_right_index.push_back({ n_colors_right ,0 });
+        color_node = set_node->first_node();
+
+        while (color_node) {
+            float u = 0;
+            pushColor(color_node, color_right_index, color_right_u, color_right);
+            u = color_right_u.back();
+            color_node = color_node->next_sibling();
+        }
+
+        //Make sure there is a color value for the last parameter value of the curve if we are using a diffusion curve save
+        if (USE_DIFFUSION_CURVE_SAVE) {
+            color_right.push_back(color_right.back());
+            color_right_index.back().y++;
+            color_right_u.push_back(current_curve_segment);
+        }
+
+        n_colors_right += color_right_index.back().y;
+
+        current_curve++;
+
+    }
+
+
+    //upload vertex data
+    const size_t widths_size = sizeof(float) * vertices.size();
+    CUdeviceptr d_widths = 0;
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&d_widths), widths_size));
+    setFloatDevice(reinterpret_cast<float*>(d_widths),vertices.size(),curve_width);
+
+ 
+
 
     const size_t vertices_size = sizeof(float3) * vertices.size();
     CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.vertices), vertices_size));
@@ -180,18 +291,8 @@ int main(int argc, char* argv[]){
         vertices_size,
         cudaMemcpyHostToDevice
     ));
-
-    const size_t widths_size = sizeof(float) * widths.size();
-    CUdeviceptr d_widths = 0;
-    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&d_widths), widths_size));
-    CALL_CHECK(cudaMemcpy(
-        reinterpret_cast<void*>(d_widths),
-        widths.data(),
-        widths_size,
-        cudaMemcpyHostToDevice
-    ));
-
     
+  
 
     CUdeviceptr              d_segementIndices = 0;
     const size_t segmentIndices_size = sizeof(unsigned int) * segmentIndices.size();
@@ -200,6 +301,82 @@ int main(int argc, char* argv[]){
         segmentIndices_size, cudaMemcpyHostToDevice));
     params.segmentIndices = reinterpret_cast<int*>(d_segementIndices);
 
+    //Upload curve -> spline map data
+    const size_t curve_map_size = sizeof(unsigned int) * curve_map.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.curve_map), curve_map_size));
+    CALL_CHECK(cudaMemcpy(
+        reinterpret_cast<void*>(params.curve_map),
+        curve_map.data(),
+        curve_map_size,
+        cudaMemcpyHostToDevice
+    ));
+
+    const size_t curve_index_size = sizeof(unsigned int) * curve_index.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.curve_index), curve_index_size));
+    CALL_CHECK(cudaMemcpy(
+        reinterpret_cast<void*>(params.curve_index),
+        curve_index.data(),
+        curve_index_size,
+        cudaMemcpyHostToDevice
+    ));
+
+
+
+    //Upload color data
+    const size_t color_left_index_size = sizeof(uint2) * color_left_index.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.color_left_index), color_left_index_size));
+    CALL_CHECK(cudaMemcpy(
+        reinterpret_cast<void*>(params.color_left_index),
+        color_left_index.data(),
+        color_left_index_size,
+        cudaMemcpyHostToDevice
+    ));
+
+
+    const size_t color_left_size = sizeof(float3) * color_left.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.color_left), color_left_size));
+    CALL_CHECK(cudaMemcpy(
+        reinterpret_cast<void*>(params.color_left),
+        color_left.data(),
+        color_left_size,
+        cudaMemcpyHostToDevice
+    ));
+
+    const size_t color_left_u_size = sizeof(float) * color_left_u.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.color_left_u), color_left_u_size));
+    CALL_CHECK(cudaMemcpy(
+        reinterpret_cast<void*>(params.color_left_u),
+        color_left_u.data(),
+        color_left_u_size,
+        cudaMemcpyHostToDevice
+    ));
+
+    const size_t color_right_index_size = sizeof(uint2) * color_right_index.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.color_right_index), color_right_index_size));
+    CALL_CHECK(cudaMemcpy(
+        reinterpret_cast<void*>(params.color_right_index),
+        color_right_index.data(),
+        color_right_index_size,
+        cudaMemcpyHostToDevice
+    ));
+
+    const size_t color_right_size = sizeof(float3) * color_right.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.color_right), color_right_size));
+    CALL_CHECK(cudaMemcpy(
+        reinterpret_cast<void*>(params.color_right),
+        color_right.data(),
+        color_right_size,
+        cudaMemcpyHostToDevice
+    ));
+
+    const size_t color_right_u_size = sizeof(float) * color_right_u.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.color_right_u), color_right_u_size));
+    CALL_CHECK(cudaMemcpy(
+        reinterpret_cast<void*>(params.color_right_u),
+        color_right_u.data(),
+        color_right_u_size,
+        cudaMemcpyHostToDevice
+    ));
 
     OptixBuildInput curve_input = {};
     curve_input.type = OPTIX_BUILD_INPUT_TYPE_CURVES;
@@ -226,7 +403,7 @@ int main(int argc, char* argv[]){
 
     OptixAccelBuildOptions accel_options = {};
     accel_options.operation = OPTIX_BUILD_OPERATION_BUILD;
-    accel_options.buildFlags = OPTIX_BUILD_FLAG_NONE;
+    accel_options.buildFlags = OPTIX_BUILD_FLAG_PREFER_FAST_TRACE;
 
 
     OptixAccelBufferSizes gas_buffer_sizes;
@@ -273,7 +450,7 @@ int main(int argc, char* argv[]){
 
     std::string devicecode;
 
-    std::string devicecodeLocation = "C:/Users/Mika/source/repos/SDK/optixHello/DeviceCode.cu";
+    std::string devicecodeLocation = "C:/Users/Mika/source/repos/SDK/optixHello/deviceCode.cu";
 
     //Read DeviceCode for compilation
     if (loadSource(devicecode, devicecodeLocation)) {
@@ -419,7 +596,7 @@ int main(int argc, char* argv[]){
     OptixPipeline pipeline;
     OptixPipelineLinkOptions pipeline_link_options = {};
     pipeline_link_options.maxTraceDepth = 1;
-    pipeline_link_options.debugLevel = OPTIX_COMPILE_DEBUG_LEVEL_FULL;
+    pipeline_link_options.debugLevel = OPTIX_COMPILE_DEBUG_LEVEL_DEFAULT;
 
 
     CALL_CHECK(optixPipelineCreate(
@@ -521,12 +698,21 @@ int main(int argc, char* argv[]){
 
     CUdeviceptr d_param;
     CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&d_param), sizeof(Params)));
-    CUstream stream;
-    CALL_CHECK(cudaStreamCreate(&stream));
 
-    
+    CALL_CHECK(cudaDeviceSynchronize());
+
+
+    auto setup_duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start_time);
+    std::cout << "Setup took : " << setup_duration.count() << " ms" << std::endl;
+
+
+    long long  total_frame_time = 0;
+
     //Main Loop
     while (!glfwWindowShouldClose(window)) {
+        start_time = std::chrono::high_resolution_clock::now();
+
+
         cudaGraphicsMapResources(1, &d_pbo, NULL);
         cudaGraphicsResourceGetMappedPointer(reinterpret_cast<void**>(&(params.image)), NULL, d_pbo);
 
@@ -544,18 +730,19 @@ int main(int argc, char* argv[]){
 
 
         glDrawPixels(width, height, GL_RGBA, GL_FLOAT, 0);
-
         cudaGraphicsUnmapResources(1, &d_pbo, NULL);
         glfwSwapBuffers(window);
 
         params.frame++;
-        //printf("\r frame : %d", params.frame);
-        Sleep(50);
+        printf("\rframe : %d", params.frame);
 
         glfwPollEvents();
+        total_frame_time += std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start_time).count();
+
         //glfwSwapBuffers(window);
     };
-
+    std::cout << std::endl;
+    std::cout << "Average frame time  : " << total_frame_time / (float) params.frame  << " ms" << std::endl;
     
 
     
@@ -589,7 +776,7 @@ int main(int argc, char* argv[]){
 
 
 static void logFunction(unsigned int level, const char* tag, const char* message, void*) {
-
+    printf("%d - %s %s \n" ,level, tag  , message);
 }
 
 static void printUChar4(uchar4* uchar) {
@@ -604,4 +791,25 @@ static bool loadSource(std::string& dest, const std::string& loc) {
         return true;
     }
     return false;
+}
+
+// B and R color channels switched if load diffusion curve xml
+static void pushColor(rapidxml::xml_node<>* color_node, std::vector<uint2>& ind, std::vector<float>& color_u, std::vector<float3>& color) {
+    float u = (std::atof(color_node->first_attribute("globalID", 8)->value()) / 10.0f);
+    color.push_back({
+        std::atoi(color_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "B" : "R",1)->value()) / 255.0f,
+        std::atoi(color_node->first_attribute("G",1)->value()) / 255.0f,
+        std::atoi(color_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "R" : "B",1)->value()) / 255.0f
+        });
+    color_u.push_back(u);
+    ind.back().y++;
+}
+
+//Switch x y if loading diffusion curve xml
+static void pushPoint(rapidxml::xml_node<>* control_node, std::vector<float3>& vertices) {
+    vertices.push_back({
+        (float) std::atof((control_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "y" : "x", 1))->value()) ,
+        (float) std::atof((control_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "x" : "y", 1))->value()) ,
+        0 });
+
 }

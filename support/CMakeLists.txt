@@ -61,7 +61,12 @@ target_include_directories( glad PUBLIC . )
 target_link_libraries( glad PUBLIC ${OPENGL_LIBRARIES} )
 
 
+add_library(rapidxml INTERFACE)
+target_include_directories(rapidxml INTERFACE rapidxml/ )
+
 # Set IDE folders for targets
 set_property( TARGET glad PROPERTY FOLDER ${OPTIX_IDE_FOLDER} )
 set_property( TARGET glfw PROPERTY FOLDER ${OPTIX_IDE_FOLDER} )
 set_property( TARGET imgui PROPERTY FOLDER ${OPTIX_IDE_FOLDER} )
+
+set_property( TARGET rapidxml PROPERTY FOLDER ${OPTIX_IDE_FOLDER} )

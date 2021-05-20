@@ -28,15 +28,42 @@
 
 #pragma once
 #include <optix.h>
+
 #include "params.h"
 #include <cuda_runtime.h>
+#include <math_functions.h>
+#include <optix_device.h>
 
-#define DU 1e-3
 
 extern "C" {
 __constant__ Params params;
 }
 
+extern "C" __forceinline__ __device__ void setColorPayload(uint2 &colorIndex, float u, float3* colors, float* color_u) {
+    int ind = colorIndex.x;
+
+    //Binary search was slower
+
+    while (ind < colorIndex.x + colorIndex.y && color_u[ind+1] < u) {
+        ind++;
+    }
+
+    //ind = 0;
+
+    //printf("%f %f %f \n ", u, color_u[ind], color_u[ind + 1]);
+    
+    float color_ratio = ((u - color_u[ind]) / (color_u[ind + 1] - color_u[ind]));
+
+    float3 color = {
+     colors[ind].x * (1 - color_ratio) + colors[ind +1].x * color_ratio,
+     colors[ind].y * (1 - color_ratio) + colors[ind +1].y * color_ratio,
+     colors[ind].z * (1 - color_ratio) + colors[ind +1].z * color_ratio
+    };
+
+    optixSetPayload_0(float_as_int(color.x));
+    optixSetPayload_1(float_as_int(color.y));
+    optixSetPayload_2(float_as_int(color.z));
+}
 
 //Returns the normal to the right of the curve direction
 extern "C" __forceinline__ __device__ void calculateSplineNormal(float t, float3 * v, float2 & result) {
@@ -44,12 +71,12 @@ extern "C" __forceinline__ __device__ void calculateSplineNormal(float t, float3
     result.y = -(1 / 6.0f) * (3 * t * t * v[3].x + v[0].x * (-3 * t * t + 6 * t - 3) + v[1].x * (9 * t * t - 12 * t) + v[2].x * (-9 * t * t + 6 * t + 3));
 }
 
-//Returns true if ray is hitting the right side of curve
-extern "C" __forceinline__ __device__ bool checkLeftRight(float t, float3 & ray_direction, float3 * v) {
+//Returns true if ray is hitting the right side of curve flips if we're using diffusion curve saves
+extern "C" __forceinline__ __device__ bool isRayRight(float t, float3 & ray_direction, float3 * v) {
     float2 curve_normal = {};
     calculateSplineNormal(t, v, curve_normal);
-
-    return ((curve_normal.x * ray_direction.x + curve_normal.y * ray_direction.y) > 0);
+    
+    return (((curve_normal.x * ray_direction.x + curve_normal.y * ray_direction.y) <= 0) ^ USE_DIFFUSION_CURVE_SAVE);
 }
 
 extern "C" __global__ void __raygen__rg()
@@ -64,9 +91,10 @@ extern "C" __global__ void __raygen__rg()
 
     sincospif(2 / params.number_of_rays_per_pixel, &rot_sin, &rot_cos);
 
+    //Flip y axis if loading diffusion curve save
 
-    ray_origin.x = idx.x * params.zoom_factor + params.offset_x;
-    ray_origin.y = idx.y * params.zoom_factor + params.offset_y;
+    ray_origin.x = ((idx.x) * params.zoom_factor) + params.offset_x;
+    ray_origin.y = (USE_DIFFUSION_CURVE_SAVE ? (params.image_height - idx.y) : (idx.y) * params.zoom_factor) + params.offset_y;
     ray_origin.z = 0;
     
     ray_direction.x = 1;
@@ -147,26 +175,32 @@ extern "C" __global__ void __miss__ms()
 extern "C" __global__ void __closesthit__ch()
 {
     float u = optixGetCurveParameter();
+    //Make sure u is not 0 or 1
+    //u = u == 0 ? u = 1e-6 : (u == 1 ? u = (1 - 1e-6) : u);
+
     float rt = optixGetRayTmax();
     int vertex_index = optixGetPrimitiveIndex();
+    int color_index_index = vertex_index / 3;
+    float color_u = ((u + (vertex_index % 3)) / 3) + params.curve_index[color_index_index];
     float3 ray_direction = optixGetWorldRayDirection();
     float3 ray_origin = optixGetWorldRayOrigin();
 
+    if (rt < 1e-2) {
+        optixSetPayload_3(float_as_int(0));
+    }
 
-    float weight = 1;    
+
+    float weight = powf(rt,-(1/2));   
 
 
+    optixSetPayload_3(float_as_int(weight));
     
-    if (checkLeftRight(u, ray_direction, &(params.vertices[params.segmentIndices[ vertex_index]]))) {
-        optixSetPayload_0(float_as_int(0));
-        optixSetPayload_1(float_as_int(0));
-        optixSetPayload_2(float_as_int(0));
-        optixSetPayload_3(float_as_int(weight));
+    
+    
+    if (isRayRight(u, ray_direction, &(params.vertices[params.segmentIndices[vertex_index]]))) {
+       setColorPayload(params.color_right_index[params.curve_map[color_index_index]], color_u, params.color_right, params.color_right_u);
     }
     else {
-        optixSetPayload_0(float_as_int(1));
-        optixSetPayload_1(float_as_int(1));
-        optixSetPayload_2(float_as_int(1));
-        optixSetPayload_3(float_as_int(weight));        
+       setColorPayload(params.color_left_index[params.curve_map[color_index_index]], color_u, params.color_left, params.color_left_u);
     }
 }

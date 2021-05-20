@@ -79,7 +79,7 @@
 
 # This sets up the name of our project.  For our purposes the main thing this controls is
 # the name of the VS solution file.
-project(OptiX-Samples)
+project(DiffusionRays LANGUAGES CXX)
 
 # This enforces a particular version of CMake that we require to process the script files
 # properly.  We rely on CXX_STANDARD, which was added in CMake 3.1.
@@ -376,6 +376,7 @@ endfunction()
 # and the CMakeLists.txt file.
 
 add_subdirectory( optixHello             ) 
+
 
 # Third-party support libraries.
 add_subdirectory(support)
