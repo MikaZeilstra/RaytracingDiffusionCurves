@@ -64,6 +64,9 @@ target_link_libraries( glad PUBLIC ${OPENGL_LIBRARIES} )
 add_library(rapidxml INTERFACE)
 target_include_directories(rapidxml INTERFACE rapidxml/ )
 
+add_library(tinygltf INTERFACE)
+target_include_directories(tinygltf INTERFACE tinygltf/ )
+
 # Set IDE folders for targets
 set_property( TARGET glad PROPERTY FOLDER ${OPTIX_IDE_FOLDER} )
 set_property( TARGET glfw PROPERTY FOLDER ${OPTIX_IDE_FOLDER} )

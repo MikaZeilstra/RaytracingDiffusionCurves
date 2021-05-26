@@ -39,20 +39,23 @@ extern "C" {
 __constant__ Params params;
 }
 
-extern "C" __forceinline__ __device__ void setColorPayload(uint2 &colorIndex, float u, float3* colors, float* color_u) {
-    int ind = colorIndex.x;
+
+extern "C" __forceinline__ __device__ void interpolate(uint2 & index, float u, float* us, float& ratio, int &ind) {
+    ind = index.x;
 
     //Binary search was slower
 
-    while (ind < colorIndex.x + colorIndex.y && color_u[ind+1] < u) {
+    while (ind < index.x + index.y && us[ind + 1] < u) {
         ind++;
     }
 
-    //ind = 0;
+    ratio = ((u - us[ind]) / (us[ind + 1] - us[ind]));
+}
 
-    //printf("%f %f %f \n ", u, color_u[ind], color_u[ind + 1]);
-    
-    float color_ratio = ((u - color_u[ind]) / (color_u[ind + 1] - color_u[ind]));
+extern "C" __forceinline__ __device__ void setColorPayload(uint2 &colorIndex, float u, float3* colors, float* color_u) {
+    float color_ratio;
+    int ind;
+    interpolate(colorIndex, u, color_u,color_ratio,ind);
 
     float3 color = {
      colors[ind].x * (1 - color_ratio) + colors[ind +1].x * color_ratio,
@@ -76,7 +79,7 @@ extern "C" __forceinline__ __device__ bool isRayRight(float t, float3 & ray_dire
     float2 curve_normal = {};
     calculateSplineNormal(t, v, curve_normal);
     
-    return (((curve_normal.x * ray_direction.x + curve_normal.y * ray_direction.y) <= 0) ^ USE_DIFFUSION_CURVE_SAVE);
+    return (((curve_normal.x * ray_direction.x + curve_normal.y * ray_direction.y) <= 0));
 }
 
 extern "C" __global__ void __raygen__rg()
@@ -93,10 +96,17 @@ extern "C" __global__ void __raygen__rg()
 
     //Flip y axis if loading diffusion curve save
 
-    ray_origin.x = ((idx.x) * params.zoom_factor) + params.offset_x;
-    ray_origin.y = (USE_DIFFUSION_CURVE_SAVE ? (params.image_height - idx.y) : (idx.y) * params.zoom_factor) + params.offset_y;
+    ray_origin.x = ((int) (idx.x - (params.image_width / 2))) * params.zoom_factor + params.offset_x;
+    ray_origin.y = USE_DIFFUSION_CURVE_SAVE ? 
+        ((int) ((params.image_height - idx.y) - (params.image_height / 2))) * params.zoom_factor + params.offset_y :
+        ((int) (idx.y - (params.image_height / 2))) * params.zoom_factor + params.offset_y;
     ray_origin.z = 0;
     
+    /*
+    if (idx.x < 8 && idx.y < 8) {
+        printf("%f %f %f \n", ray_origin.x, ray_origin.y, ray_origin.z);
+    }
+    */
     ray_direction.x = 1;
     ray_direction.y = 0;
     ray_direction.z = 0;  
@@ -133,11 +143,6 @@ extern "C" __global__ void __raygen__rg()
         color.y += result.y * result.w;
         color.z += result.z * result.w;
 
-
-        if (idx.x == 150 && idx.y == 50) {
-            //printf("rayO : %f, %f, %f \n", ray_origin.x, ray_origin.y, ray_origin.z);
-            //printf("result : %f, %f, %f, %f \n", result.x, result.y, result.z, result.w);
-        }
         //Rotate Ray
         ray_direction = { ray_direction.x * rot_cos - ray_direction.y * rot_sin,
                         ray_direction.x * rot_sin + ray_direction.y * rot_cos,
@@ -174,33 +179,43 @@ extern "C" __global__ void __miss__ms()
 
 extern "C" __global__ void __closesthit__ch()
 {
-    float u = optixGetCurveParameter();
+    float segment_u = optixGetCurveParameter();
     //Make sure u is not 0 or 1
     //u = u == 0 ? u = 1e-6 : (u == 1 ? u = (1 - 1e-6) : u);
 
     float rt = optixGetRayTmax();
     int vertex_index = optixGetPrimitiveIndex();
-    int color_index_index = vertex_index / 3;
-    float color_u = ((u + (vertex_index % 3)) / 3) + params.curve_index[color_index_index];
+    float curve_u = segment_u  + params.curve_index[vertex_index];
     float3 ray_direction = optixGetWorldRayDirection();
     float3 ray_origin = optixGetWorldRayOrigin();
+    
+    float weight_multiplier = 1;
+
+    if (USE_WEIGHT_INTERPOLATION) {
+        int weight_ind;
+        float weight_ratio;
+
+        interpolate(params.weight_index[params.curve_map[vertex_index]], curve_u, params.weight_u, weight_ratio, weight_ind);
+
+        weight_multiplier = (1 - weight_ratio) * params.weight[weight_ind] + weight_ratio * params.weight[weight_ind + 1];
+    }
+
+    float weight = weight_multiplier * powf(rt,-(0.3));
+
+
+
+    optixSetPayload_3(float_as_int(weight));
 
     if (rt < 1e-2) {
         optixSetPayload_3(float_as_int(0));
     }
-
-
-    float weight = powf(rt,-(1/2));   
-
-
-    optixSetPayload_3(float_as_int(weight));
     
     
     
-    if (isRayRight(u, ray_direction, &(params.vertices[params.segmentIndices[vertex_index]]))) {
-       setColorPayload(params.color_right_index[params.curve_map[color_index_index]], color_u, params.color_right, params.color_right_u);
+    if (isRayRight(segment_u, ray_direction, &(params.vertices[params.segmentIndices[vertex_index]]))) {
+       setColorPayload(params.color_right_index[params.curve_map[vertex_index]], curve_u, params.color_right, params.color_right_u);
     }
     else {
-       setColorPayload(params.color_left_index[params.curve_map[color_index_index]], color_u, params.color_left, params.color_left_u);
+       setColorPayload(params.color_left_index[params.curve_map[vertex_index]], curve_u, params.color_left, params.color_left_u);
     }
 }

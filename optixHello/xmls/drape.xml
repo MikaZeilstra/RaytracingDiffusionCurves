@@ -1,0 +1,1657 @@
+<!DOCTYPE CurveSetXML>
+<curve_set image_width="512" image_height="512" nb_curves="69" >
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="59.62589928057545" y="210.8307692307692" />
+   <control_point x="64.59677306698322" y="211.188644347265" />
+   <control_point x="62.53133274492501" y="211.3290415083519" />
+   <control_point x="69.08384819064432" y="209.6589576313714" />
+   <control_point x="75.26078058801167" y="208.084601143165" />
+   <control_point x="91.33980582524274" y="213.1184170908309" />
+   <control_point x="95.76978417266187" y="219.4268311892885" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="81" R="67" globalID="0" B="153" />
+   <left_color G="154" R="143" globalID="20" B="208" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="24" R="171" globalID="0" B="127" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="95.30935251798559" y="219.3037542662116" />
+   <control_point x="99.9310406217547" y="219.3037542662116" />
+   <control_point x="106.3227387129782" y="217.3854077073699" />
+   <control_point x="108.2014388489208" y="212.7508532423208" />
+   <control_point x="110.147088376102" y="207.9511417124691" />
+   <control_point x="108.1452390542339" y="201.8670179156578" />
+   <control_point x="107.1562224183584" y="197.2488350419385" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="81" R="67" globalID="0" B="153" />
+   <left_color G="255" R="255" globalID="20" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="24" R="171" globalID="0" B="127" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="72.51798561151071" y="244.3076923076923" />
+   <control_point x="83.71825074175018" y="242.6472434455941" />
+   <control_point x="98.81703380243965" y="236.3407659036897" />
+   <control_point x="105.4388489208632" y="235.9384615384615" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="80" R="171" globalID="10" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="81" R="67" globalID="0" B="153" />
+   <right_color G="117" R="105" globalID="10" B="180" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="104.0575539568345" y="236.3412969283276" />
+   <control_point x="112.0491526060731" y="233.8138061154854" />
+   <control_point x="116.905717631602" y="247.6810553754743" />
+   <control_point x="117.5251798561151" y="252.6769230769231" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="24" R="171" globalID="10" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="154" R="143" globalID="0" B="208" />
+   <right_color G="69" R="58" globalID="10" B="148" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="142.2733812949639" y="185.2307692307692" />
+   <control_point x="151.251798561151" y="181.0461538461538" />
+   <control_point x="139.9712230215826" y="185.9692307692308" />
+   <control_point x="154.7050359712229" y="178.0923076923077" />
+   <control_point x="161.4367690440155" y="174.4934196264686" />
+   <control_point x="170.1556097539748" y="168.587347448347" />
+   <control_point x="173.5827338129495" y="165.5384615384616" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="104" R="171" globalID="0" B="151" />
+   <left_color G="130" R="130" globalID="20" B="130" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="104" R="171" globalID="0" B="151" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="143.1942446043165" y="184.9846153846154" />
+   <control_point x="155.8048651449424" y="189.3355337963983" />
+   <control_point x="166.8102715818196" y="193.1061491404695" />
+   <control_point x="178.6474820143885" y="198.3344709897611" />
+   <control_point x="190.6790798816341" y="203.6486509115891" />
+   <control_point x="200.0575539568345" y="209.037542662116" />
+   <control_point x="215.9424460431655" y="211.221843003413" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="130" R="130" globalID="0" B="130" />
+   <right_color G="255" R="255" globalID="20" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="130.0719424460431" y="185.7230769230769" />
+   <control_point x="146.4172661870503" y="203.9384615384615" />
+   <control_point x="162.4245888858035" y="197.2205506281496" />
+   <control_point x="169.8992805755395" y="205.9076923076923" />
+   <control_point x="173.9714277951034" y="210.6403717685566" />
+   <control_point x="178.6787187676674" y="219.0704395010836" />
+   <control_point x="174.7338129496402" y="227.3230769230769" />
+   <control_point x="169.4388489208632" y="238.4" />
+   <control_point x="168.6225407095766" y="239.2374340736219" />
+   <control_point x="173.8129496402877" y="246.7692307692308" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="80" R="171" globalID="30" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="24" R="171" globalID="30" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="112.3453237410072" y="204.4505119453925" />
+   <control_point x="115.9407032288201" y="205.5876171758953" />
+   <control_point x="118.6452139616496" y="209.6644898120058" />
+   <control_point x="120.6330935251799" y="212.7508532423208" />
+   <control_point x="124.0798294001325" y="218.1022234931006" />
+   <control_point x="122.2446043165467" y="218.4615384615385" />
+   <control_point x="123.1654676258992" y="227.3230769230769" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="154" R="143" globalID="0" B="208" />
+   <left_color G="81" R="67" globalID="20" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="154" R="143" globalID="0" B="208" />
+   <right_color G="154" R="143" globalID="20" B="208" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="98.30215827338117" y="222.6461538461539" />
+   <control_point x="114.1870503597121" y="220.9230769230769" />
+   <control_point x="117.6402877697841" y="228.5538461538461" />
+   <control_point x="124.0863309352517" y="230.2769230769231" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="154" R="143" globalID="0" B="208" />
+   <left_color G="154" R="143" globalID="10" B="208" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="81" R="67" globalID="0" B="153" />
+   <right_color G="81" R="67" globalID="10" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="123.3956834532374" y="237.6518771331058" />
+   <control_point x="119.3709648633648" y="243.8572239691978" />
+   <control_point x="121.3687891142387" y="241.7593058916097" />
+   <control_point x="118.3309352517986" y="244.641638225256" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="81" R="67" globalID="0" B="153" />
+   <left_color G="81" R="67" globalID="10" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="154" R="143" globalID="0" B="208" />
+   <right_color G="154" R="143" globalID="10" B="208" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="203.7410071942445" y="263.2615384615385" />
+   <control_point x="211.798561151079" y="265.2307692307692" />
+   <control_point x="222.2408812688699" y="267.87817725645" />
+   <control_point x="231.5971223021583" y="269.542662116041" />
+   <control_point x="246.7099592023139" y="272.231251274473" />
+   <control_point x="261.4225715558045" y="271.7269624573379" />
+   <control_point x="276.7194244604316" y="271.7269624573379" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="130" R="130" globalID="20" B="130" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="255" R="255" globalID="0" B="255" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="43.74100719424459" y="236.8" />
+   <control_point x="56.17266187050356" y="245.6615384615385" />
+   <control_point x="48.57553956834522" y="240.8615384615384" />
+   <control_point x="55.71223021582725" y="246.0307692307692" />
+   <control_point x="63.38550580504892" y="251.5886579267836" />
+   <control_point x="58.24460431654677" y="246.5230769230769" />
+   <control_point x="70.90647482014387" y="257.3538461538462" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="255" R="255" globalID="0" B="255" />
+   <right_color G="80" R="171" globalID="20" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="4" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="33.38129496402868" y="226.3384615384615" />
+   <control_point x="32.92086330935243" y="232" />
+   <control_point x="32.00084603721885" y="240.3962981530011" />
+   <control_point x="35.45323741007184" y="243.8153846153846" />
+   <control_point x="49.49640287769773" y="257.7230769230769" />
+   <control_point x="55.82733812949641" y="251.4461538461539" />
+   <control_point x="70.79136690647482" y="257.7230769230769" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="130" R="130" globalID="0" B="130" />
+   <left_color G="130" R="130" globalID="20" B="130" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="255" R="255" globalID="0" B="255" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="33.15107913669056" y="226.8307692307692" />
+   <control_point x="37.29496402877689" y="211.8153846153846" />
+   <control_point x="41.42914687528517" y="208.9385977320388" />
+   <control_point x="53.87050359712231" y="203.1399317406143" />
+   <control_point x="63.91900489963535" y="198.456527505014" />
+   <control_point x="71.36690647482004" y="197.2923076923077" />
+   <control_point x="83.79856115107904" y="189.1692307692308" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="80" R="171" globalID="20" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="130" R="130" globalID="0" B="130" />
+   <right_color G="130" R="130" globalID="20" B="130" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="93.92805755395676" y="185.7230769230769" />
+   <control_point x="97.68445197576239" y="186.2322322859545" />
+   <control_point x="98.64031987911756" y="185.9732780108326" />
+   <control_point x="106.4748201438849" y="191.8769230769231" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="24" R="171" globalID="10" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="130" R="130" globalID="0" B="130" />
+   <right_color G="130" R="130" globalID="10" B="130" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="74.82014388489199" y="246.2769230769231" />
+   <control_point x="86.54879319599485" y="246.2769230769231" />
+   <control_point x="98.7306043744419" y="238.2032218764398" />
+   <control_point x="109.1223021582734" y="244.2047781569966" />
+   <control_point x="111.5396670492371" y="245.6008879886676" />
+   <control_point x="113.4196642685851" y="247.6996587030717" />
+   <control_point x="115.568345323741" y="249.4470989761092" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="255" R="255" globalID="20" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="82.41726618705027" y="250.2153846153846" />
+   <control_point x="97.95683453237393" y="245.9076923076923" />
+   <control_point x="107.4835359298766" y="252.0162281582646" />
+   <control_point x="116.470685520549" y="253.7534444667604" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="24" R="171" globalID="10" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="255" R="255" globalID="10" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="69.75539568345315" y="206.1538461538461" />
+   <control_point x="85.22815917499997" y="200.2815891563717" />
+   <control_point x="91.39454594698702" y="192.0106475741335" />
+   <control_point x="100.8345323741007" y="207.0153846153846" />
+   <control_point x="103.4820143884892" y="211.2235232344448" />
+   <control_point x="104.978417266187" y="205.4153846153846" />
+   <control_point x="108.2014388489209" y="211.8771331058021" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="255" R="255" globalID="20" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="178.6474820143885" y="141.9795221843004" />
+   <control_point x="216.208081783331" y="134.8519817503304" />
+   <control_point x="261.4147430176026" y="139.0000853681327" />
+   <control_point x="299.7410071942446" y="142.8532423208191" />
+   <control_point x="327.7661209830478" y="145.6707661354926" />
+   <control_point x="358.1399169269964" y="152.6997588433263" />
+   <control_point x="383.5395683453237" y="163.8225255972696" />
+   <control_point x="387.007911229074" y="165.3413483670505" />
+   <control_point x="400.4865625273218" y="170.4035672552953" />
+   <control_point x="399.1942446043166" y="170.8122866894198" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="24" R="171" globalID="30" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="130" R="130" globalID="0" B="130" />
+   <right_color G="255" R="255" globalID="30" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="215.4820143884892" y="145.9112627986348" />
+   <control_point x="246.1417397882347" y="151.4147980470349" />
+   <control_point x="273.3453820110547" y="173.0101600013194" />
+   <control_point x="304.3453237410072" y="176.7098976109215" />
+   <control_point x="319.9044543786343" y="178.5668269333764" />
+   <control_point x="320.2302158273382" y="175.1808873720136" />
+   <control_point x="338.8776978417266" y="173.4334470989761" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="255" R="255" globalID="20" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="332.431654676259" y="186.5392491467577" />
+   <control_point x="344.5628324490178" y="191.1433002332109" />
+   <control_point x="359.0920784509286" y="196.9470609212049" />
+   <control_point x="370.6474820143885" y="202.703071672355" />
+   <control_point x="381.1028488133862" y="207.9111289567021" />
+   <control_point x="374.7046013214144" y="206.19795221843" />
+   <control_point x="389.0647482014389" y="206.19795221843" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="80" R="171" globalID="20" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="233.6690647482014" y="202.703071672355" />
+   <control_point x="238.5035971223022" y="205.7610921501707" />
+   <control_point x="244.9496402877698" y="208.8191126279863" />
+   <control_point x="254.3884892086331" y="214.4982935153583" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="154" R="143" globalID="0" B="208" />
+   <left_color G="154" R="143" globalID="10" B="208" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="81" R="67" globalID="0" B="153" />
+   <right_color G="81" R="67" globalID="10" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="34" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="220.7769784172662" y="206.8532423208191" />
+   <control_point x="212.6443349260618" y="210.7113905982164" />
+   <control_point x="222.2349155882948" y="213.1829598301633" />
+   <control_point x="229.7553956834532" y="217.5563139931741" />
+   <control_point x="234.6881209113501" y="220.4248216067105" />
+   <control_point x="252.2636287187374" y="225.8064463611229" />
+   <control_point x="248.1726618705036" y="221.9249146757679" />
+   <control_point x="245.4028648405858" y="219.2969161286105" />
+   <control_point x="234.5255913611769" y="216.0401457566966" />
+   <control_point x="231.136690647482" y="214.061433447099" />
+   <control_point x="230.8125233248159" y="213.8721585388266" />
+   <control_point x="217.3530841533987" y="208.1213068473452" />
+   <control_point x="235.2805755395684" y="211.4402730375427" />
+   <control_point x="236.9605875498707" y="211.7512983193967" />
+   <control_point x="265.4885008274809" y="225.3233004930203" />
+   <control_point x="261.9856115107914" y="221.7064846416382" />
+   <control_point x="254.158273381295" y="213.6245733788396" />
+   <control_point x="264.7784994562157" y="222.8944578933784" />
+   <control_point x="263.3669064748202" y="218.4300341296928" />
+   <control_point x="261.5426973230938" y="212.6606354473274" />
+   <control_point x="238.7338129496403" y="200.3003412969283" />
+   <control_point x="253.2374100719425" y="207.9453924914676" />
+   <control_point x="253.8143544521109" y="208.2495080350528" />
+   <control_point x="277.3049785033944" y="215.182076638519" />
+   <control_point x="264.2877697841727" y="209.6928327645051" />
+   <control_point x="255.9640766243912" y="206.1828036428984" />
+   <control_point x="244.9623428909142" y="199.5771513791449" />
+   <control_point x="236.6618705035971" y="196.3686006825939" />
+   <control_point x="230.4812543525356" y="193.9794812046586" />
+   <control_point x="230.6762589928057" y="197.679180887372" />
+   <control_point x="226.7625899280575" y="200.3003412969283" />
+   <control_point x="224.2365889623291" y="201.9921178923249" />
+   <control_point x="221.5443645083933" y="203.2855517633674" />
+   <control_point x="220.7769784172662" y="206.8532423208191" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="80" R="171" globalID="110" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="81" R="67" globalID="0" B="153" />
+   <right_color G="81" R="67" globalID="110" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="110" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="208.8057553956834" y="210.0923076923077" />
+   <control_point x="208.8057553956834" y="202.4848295197945" />
+   <control_point x="216.3929502850236" y="196.2633103253178" />
+   <control_point x="223.3093525179856" y="193.5290102389079" />
+   <control_point x="230.6834731737801" y="190.6137577612189" />
+   <control_point x="236.6364853956053" y="184.5423627727638" />
+   <control_point x="244.0287769784173" y="182.6075085324232" />
+   <control_point x="258.4399478970566" y="178.8355367632042" />
+   <control_point x="261.5081492434757" y="181.5140118002521" />
+   <control_point x="280.863309352518" y="183.0443686006826" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="255" R="255" globalID="30" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="24" R="171" globalID="0" B="127" />
+   <right_color G="24" R="171" globalID="30" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="209.0359712230215" y="208.6153846153846" />
+   <control_point x="197.9856115107913" y="198.1307429771593" />
+   <control_point x="228.7809792195867" y="178.9613163858012" />
+   <control_point x="233.8992805755396" y="174.7440273037543" />
+   <control_point x="240.735590064107" y="169.111163710426" />
+   <control_point x="223.7697841726619" y="162.9086947026582" />
+   <control_point x="223.7697841726619" y="158.3617747440273" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="80" R="171" globalID="20" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="80" R="171" globalID="20" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="224.6906474820144" y="195.2764505119454" />
+   <control_point x="213.6402877697842" y="200.3003412969283" />
+   <control_point x="211.1079136690647" y="209.2559726962458" />
+   <control_point x="219.6258992805755" y="211.4402730375427" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="80" R="171" globalID="10" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="24" R="171" globalID="10" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="243.8821797734225" y="256.0928700542277" />
+   <control_point x="258.0063177044571" y="251.414018879293" />
+   <control_point x="253.6634994611142" y="244.9143457387469" />
+   <control_point x="269.1879268998594" y="241.3879092187186" />
+   <control_point x="278.0155131067559" y="239.3826872866037" />
+   <control_point x="275.6614901182501" y="244.7299457722434" />
+   <control_point x="310.3309352517985" y="248.9846153846154" />
+   <control_point x="327.0011148634364" y="251.0303968026107" />
+   <control_point x="348.2446542558818" y="261.409587050191" />
+   <control_point x="356.3741007194244" y="260.3076923076923" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="80" R="171" globalID="30" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="255" R="255" globalID="0" B="255" />
+   <right_color G="255" R="255" globalID="30" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="4" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="359.1366906474819" y="260.3076923076923" />
+   <control_point x="377.5539568345323" y="256.3692307692308" />
+   <control_point x="383.5395683453235" y="256.6830139144132" />
+   <control_point x="401.0359712230215" y="252.9230769230769" />
+   <control_point x="418.4888292906817" y="249.1724976118984" />
+   <control_point x="464.4744562970313" y="243.4291223137176" />
+   <control_point x="481.0499958653766" y="245.3983530829484" />
+   <control_point x="499.8524387339149" y="247.6321475775867" />
+   <control_point x="496.9396510377904" y="254.7560554328178" />
+   <control_point x="514.5948234515835" y="284.165977103836" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="104" R="171" globalID="30" B="151" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="104" R="171" globalID="0" B="151" />
+   <right_color G="24" R="171" globalID="30" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="396.431654676259" y="264.3003412969283" />
+   <control_point x="425.202621419329" y="267.9400813445158" />
+   <control_point x="436.7886351252798" y="271.2159957271927" />
+   <control_point x="462.2733812949641" y="281.3378839590444" />
+   <control_point x="488.0925607838277" y="291.592600536731" />
+   <control_point x="473.4549102731949" y="291.6567144188073" />
+   <control_point x="496.8057553956834" y="278.2798634812287" />
+   <control_point x="499.7582972859651" y="276.5884594850959" />
+   <control_point x="503.1327214090795" y="271.2943837610569" />
+   <control_point x="506.3557429918134" y="270.1294235790319" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="130" R="130" globalID="0" B="130" />
+   <left_color G="80" R="171" globalID="30" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="24" R="171" globalID="30" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="412.1948234515835" y="216.656838722635" />
+   <control_point x="427.3890680559001" y="208.793357493966" />
+   <control_point x="422.7879268998594" y="207.2991363727656" />
+   <control_point x="444.5626395435375" y="203.2886925085358" />
+   <control_point x="471.2483273812014" y="198.3737503551026" />
+   <control_point x="507.5327544860662" y="214.6516167905201" />
+   <control_point x="529.8959728768708" y="170.5367342839927" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="255" R="255" globalID="20" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="80" R="171" globalID="20" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="393.9511452906639" y="219.9988752761599" />
+   <control_point x="395.5090932148934" y="219.5061454434683" />
+   <control_point x="422.6552319169243" y="200.9755820037374" />
+   <control_point x="426.3597122302159" y="197.4607508532423" />
+   <control_point x="429.6269376917456" y="194.3607894938387" />
+   <control_point x="459.127767908206" y="147.9619940743388" />
+   <control_point x="476.5467625899281" y="155.9590443686007" />
+   <control_point x="506.8893098074758" y="169.8892900910684" />
+   <control_point x="507.5327544860662" y="159.1738100020084" />
+   <control_point x="531.6614901182502" y="147.1424784093191" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="255" R="255" globalID="30" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="130" R="130" globalID="0" B="130" />
+   <right_color G="24" R="171" globalID="30" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="441.0935251798561" y="178.0335950240156" />
+   <control_point x="446.7096783454056" y="171.5208167228209" />
+   <control_point x="450.284199102875" y="155.236646984866" />
+   <control_point x="457.2086330935252" y="150.0745506554149" />
+   <control_point x="469.5645235598158" y="140.8633578114566" />
+   <control_point x="493.9971223021582" y="133.7743321952199" />
+   <control_point x="506.3557429918134" y="119.7377786704157" />
+   <control_point x="509.3038845820977" y="116.3893672036436" />
+   <control_point x="527.5487200984276" y="75.53675613531206" />
+   <control_point x="528.1304556354916" y="78.29652540670813" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="255" R="255" globalID="30" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="130" R="130" globalID="0" B="130" />
+   <right_color G="130" R="130" globalID="30" B="130" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="415.7258579343421" y="242.0563165294235" />
+   <control_point x="432.3590352664258" y="235.1518448809092" />
+   <control_point x="470.4981182623424" y="220.5031880711424" />
+   <control_point x="488.5179856115108" y="225.8566552901024" />
+   <control_point x="509.2982717274456" y="232.0302068688492" />
+   <control_point x="520.3571734381837" y="285.1151752677026" />
+   <control_point x="526.9534441412386" y="290.1816429001807" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="255" R="255" globalID="20" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="462.2733812949641" y="281.5431967848581" />
+   <control_point x="469.3463811582463" y="283.460597040336" />
+   <control_point x="477.1715373465767" y="294.2849652563347" />
+   <control_point x="485.294964028777" y="292.9015585596023" />
+   <control_point x="488.0925846631054" y="292.4251281969171" />
+   <control_point x="503.2657807337927" y="292.2682598512049" />
+   <control_point x="501.0591912676754" y="302.2129744928701" />
+   <control_point x="498.6594877934529" y="313.0280203553641" />
+   <control_point x="518.7143636814685" y="315.5811207069692" />
+   <control_point x="522.2453981642271" y="389.1059248845149" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="130" R="130" globalID="0" B="130" />
+   <left_color G="130" R="130" globalID="30" B="130" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="255" R="255" globalID="0" B="255" />
+   <right_color G="80" R="171" globalID="30" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="461.8129496402878" y="147.221843003413" />
+   <control_point x="474.6984848498229" y="145.3409405154892" />
+   <control_point x="486.3465475895145" y="143.8004418557943" />
+   <control_point x="502.8247085090547" y="140.4584053022695" />
+   <control_point x="508.0451453485699" y="139.3996165922783" />
+   <control_point x="510.7813053280603" y="116.0945717444819" />
+   <control_point x="513.4178119573306" y="111.7168909419562" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="104" R="171" globalID="20" B="151" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="104" R="171" globalID="0" B="151" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="9" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="306.1870503597122" y="207.1384615384615" />
+   <control_point x="317.1883138805247" y="208.008299780437" />
+   <control_point x="326.8887116692176" y="202.5484396915287" />
+   <control_point x="337.0359712230216" y="199.2081911262799" />
+   <control_point x="349.2956895906333" y="195.1725688510599" />
+   <control_point x="355.4077263347422" y="209.1964670812999" />
+   <control_point x="362.1718349458363" y="214.6516167905202" />
+   <control_point x="368.7306149085888" y="219.9411720983647" />
+   <control_point x="387.8189449300294" y="206.4770824809021" />
+   <control_point x="395.7166625320432" y="205.2939144406507" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="130" R="130" globalID="0" B="130" />
+   <left_color G="255" R="255" globalID="30" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="24" R="171" globalID="0" B="127" />
+   <right_color G="80" R="171" globalID="30" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="363.2805755395684" y="190.0341296928328" />
+   <control_point x="376.625251984793" y="191.4409632354086" />
+   <control_point x="389.4131557497104" y="191.7619957646339" />
+   <control_point x="402.4172661870504" y="187.8498293515359" />
+   <control_point x="409.7533883241859" y="185.642824822808" />
+   <control_point x="410.9599369773763" y="184.8893131745553" />
+   <control_point x="416.6906474820144" y="182.1706484641638" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="104" R="171" globalID="20" B="151" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="104" R="171" globalID="0" B="151" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="19" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="236.8920863309353" y="195.7133105802048" />
+   <control_point x="266.1294964028778" y="194.839590443686" />
+   <control_point x="280.4390874273174" y="185.3800857439925" />
+   <control_point x="298.3597122302159" y="189.8156996587031" />
+   <control_point x="323.1651398509678" y="195.9554018803108" />
+   <control_point x="321.2660406544375" y="201.464471672113" />
+   <control_point x="330.589928057554" y="188.0682593856656" />
+   <control_point x="351.8320573157357" y="157.548363482199" />
+   <control_point x="350.6854757038643" y="199.299258803934" />
+   <control_point x="383.0791366906475" y="204.2320819112628" />
+   <control_point x="398.8069946434615" y="206.6270795365723" />
+   <control_point x="412.3755984036612" y="192.2474408509752" />
+   <control_point x="426.3597122302159" y="185.0102389078498" />
+   <control_point x="440.6558063959899" y="177.6115777013618" />
+   <control_point x="405.0522583522875" y="173.4937496403286" />
+   <control_point x="390.4460431654677" y="166.6621160409557" />
+   <control_point x="388.1384447482213" y="165.5828037975385" />
+   <control_point x="378.1678657074341" y="161.2741751990899" />
+   <control_point x="375.7122302158274" y="160.5460750853242" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="255" R="255" globalID="60" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="24" R="171" globalID="0" B="127" />
+   <right_color G="24" R="171" globalID="60" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="60" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="243.3381294964029" y="197.4607508532423" />
+   <control_point x="252.5467625899281" y="194.1843003412969" />
+   <control_point x="253.0071942446043" y="195.4948805460751" />
+   <control_point x="259.2230215827338" y="194.839590443686" />
+   <control_point x="275.4641134225153" y="193.127408596337" />
+   <control_point x="286.1805211283673" y="199.0624117043299" />
+   <control_point x="306.6474820143884" y="207.1384615384615" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="24" R="171" globalID="0" B="127" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="106.5913503971757" y="191.6421248835042" />
+   <control_point x="106.3391811875447" y="189.780764108622" />
+   <control_point x="108.182514139014" y="185.4082028521667" />
+   <control_point x="110.5035971223021" y="183.481228668942" />
+   <control_point x="127.2424748803149" y="169.5845323732539" />
+   <control_point x="145.0002831508186" y="164.7191019342965" />
+   <control_point x="163.4532374100719" y="152.901023890785" />
+   <control_point x="168.8112230771701" y="149.4695358005769" />
+   <control_point x="176.8669333563661" y="143.4122447717435" />
+   <control_point x="179.1079136690648" y="141.9795221843004" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="255" R="255" globalID="30" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="130" R="130" globalID="0" B="130" />
+   <right_color G="130" R="130" globalID="30" B="130" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="95.40688437775816" y="219.3178005591799" />
+   <control_point x="95.74580759046779" y="227.4296365330848" />
+   <control_point x="88.98362414583727" y="235.6698010023605" />
+   <control_point x="81.73698146513681" y="238.6430568499534" />
+   <control_point x="74.87332863774839" y="241.4591741616611" />
+   <control_point x="67.79856115107904" y="240.3692307692308" />
+   <control_point x="65.15107913669056" y="242.0923076923077" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="154" R="143" globalID="0" B="208" />
+   <left_color G="154" R="143" globalID="20" B="208" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="81" R="67" globalID="0" B="153" />
+   <right_color G="81" R="67" globalID="20" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="70.90647482014387" y="257.3538461538462" />
+   <control_point x="75.21568386470872" y="260.5342842266262" />
+   <control_point x="105.4388489208632" y="283.2256235232344" />
+   <control_point x="119.9424460431654" y="263.5076923076923" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="130" R="130" globalID="0" B="130" />
+   <left_color G="255" R="255" globalID="10" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="80" R="171" globalID="10" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="119.7122302158273" y="263.5076923076923" />
+   <control_point x="132.8345323741006" y="259.4461538461538" />
+   <control_point x="131.4532374100718" y="261.5372013651876" />
+   <control_point x="139.2805755395683" y="253.1692307692308" />
+   <control_point x="140.0183040244539" y="252.3805475454846" />
+   <control_point x="145.3429256594724" y="244.1967970595956" />
+   <control_point x="145.956834532374" y="243.3230769230769" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="255" R="255" globalID="20" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="3" nb_right_colors="3" nb_blur_points="3" lifetime="32" >
+  <control_points_set>
+   <control_point x="65.38129496402871" y="241.3538461538461" />
+   <control_point x="61.46762589928051" y="239.1384615384615" />
+   <control_point x="58.54412492225723" y="233.7917603060033" />
+   <control_point x="56.86330935251789" y="230.7692307692308" />
+   <control_point x="52.01294120547382" y="222.0470477691441" />
+   <control_point x="53.68075591122252" y="225.5236160314149" />
+   <control_point x="56.40287769784163" y="216.2461538461538" />
+   <control_point x="57.23151946650535" y="213.4219992797803" />
+   <control_point x="57.5539568345323" y="213.2923076923077" />
+   <control_point x="61.46762589928051" y="209.1076923076923" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="154" R="143" globalID="0" B="208" />
+   <left_color G="81" R="67" globalID="20" B="153" />
+   <left_color G="145" R="136" globalID="30" B="190" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="24" R="171" globalID="0" B="127" />
+   <right_color G="80" R="171" globalID="20" B="153" />
+   <right_color G="24" R="171" globalID="30" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="119.9424460431654" y="263.0153846153846" />
+   <control_point x="121.334442739743" y="265.9531296026545" />
+   <control_point x="122.1123022008157" y="265.3100961910188" />
+   <control_point x="123.8561151079137" y="265.6109215017065" />
+   <control_point x="139.0503597122302" y="268.2320819112628" />
+   <control_point x="134.9546235724319" y="262.849942186743" />
+   <control_point x="154.2446043165468" y="265.1740614334471" />
+   <control_point x="170.5706688791177" y="267.1410784759281" />
+   <control_point x="181.8705035971223" y="262.1160409556314" />
+   <control_point x="203.9712230215827" y="263.4266211604096" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="255" R="255" globalID="30" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="80" R="171" globalID="30" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="3" nb_right_colors="3" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="106.705035971223" y="196.1846153846154" />
+   <control_point x="109.7393865324196" y="199.0641292146019" />
+   <control_point x="133.6941349757077" y="221.5165102612206" />
+   <control_point x="143.6546762589928" y="236.9012339196639" />
+   <control_point x="149.3295562715939" y="245.6664664813925" />
+   <control_point x="121.0935251798561" y="252.8" />
+   <control_point x="117.8705035971223" y="253.1692307692308" />
+   <control_point x="117.3948750588917" y="253.423509103131" />
+   <control_point x="119.3374471560862" y="252.2958536962106" />
+   <control_point x="116.3741007194245" y="253.7846153846154" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="169" R="136" globalID="0" B="219" />
+   <left_color G="255" R="255" globalID="10" B="255" />
+   <left_color G="169" R="136" globalID="20" B="219" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="0" R="176" globalID="0" B="108" />
+   <right_color G="0" R="176" globalID="10" B="108" />
+   <right_color G="63" R="176" globalID="20" B="140" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="106.4748201438849" y="191.8769230769231" />
+   <control_point x="109.5022565248938" y="194.1582312969282" />
+   <control_point x="115.507606426371" y="200.9650484671267" />
+   <control_point x="125.2374100719424" y="202.2153846153846" />
+   <control_point x="130.0719424460429" y="202.8366500393803" />
+   <control_point x="138.3597122302157" y="216.2461538461538" />
+   <control_point x="142.0431654676258" y="219.6923076923077" />
+   <control_point x="143.6712281851783" y="221.2154856001717" />
+   <control_point x="146.6474820143885" y="237.0997812199177" />
+   <control_point x="147.5683453237409" y="239.1384615384615" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="255" R="255" globalID="30" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="24" R="171" globalID="0" B="127" />
+   <right_color G="255" R="255" globalID="30" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="83.56834532374091" y="190.6461538461538" />
+   <control_point x="84.95382663781754" y="189.8548641546223" />
+   <control_point x="84.48920863309343" y="187.2" />
+   <control_point x="90.93525179856107" y="185.9692307692307" />
+   <control_point x="95.04419151587345" y="185.1846942023263" />
+   <control_point x="98.99280575539558" y="185.7230769230769" />
+   <control_point x="106.705035971223" y="196.1846153846154" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="224" R="244" globalID="0" B="238" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="117" R="131" globalID="0" B="124" />
+   <right_color G="130" R="130" globalID="20" B="130" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="354.5323741007193" y="260.8" />
+   <control_point x="373.8950016685249" y="261.6926563991918" />
+   <control_point x="400.5865213953783" y="261.1039336360369" />
+   <control_point x="423.136690647482" y="265.1740614334471" />
+   <control_point x="472.8109154056065" y="274.1398674432617" />
+   <control_point x="489.5979422885056" y="247.924025011418" />
+   <control_point x="497.5281567849168" y="250.745611568588" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="130" R="130" globalID="0" B="130" />
+   <left_color G="255" R="255" globalID="20" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="80" R="171" globalID="20" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="306.6474820143884" y="207.1384615384615" />
+   <control_point x="321.8386981641727" y="213.1327573867776" />
+   <control_point x="346.8614185408811" y="230.9531440392846" />
+   <control_point x="368.8057553956834" y="229.3515358361775" />
+   <control_point x="378.7987319301369" y="228.6221980896356" />
+   <control_point x="382.1474206418776" y="226.6106937138161" />
+   <control_point x="397.3525179856114" y="219.9384615384615" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="130" R="130" globalID="0" B="130" />
+   <right_color G="130" R="130" globalID="20" B="130" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="397.3525179856114" y="219.9384615384615" />
+   <control_point x="406.5275704924175" y="215.9123064167577" />
+   <control_point x="429.5658931983053" y="207.6550911626421" />
+   <control_point x="440.6330935251799" y="195.2764505119454" />
+   <control_point x="466.3373521872157" y="166.526290419763" />
+   <control_point x="487.5235590837674" y="178.5576220124523" />
+   <control_point x="502.2362027619283" y="196.6046194014862" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="80" R="171" globalID="20" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="67.22302158273379" y="247.1384615384615" />
+   <control_point x="74.93206481831203" y="251.2598346528668" />
+   <control_point x="79.17182928066481" y="257.115003087953" />
+   <control_point x="87.48201438848921" y="260.9230769230769" />
+   <control_point x="97.99138793757527" y="265.7389107362296" />
+   <control_point x="105.4808823980827" y="265.8236821025635" />
+   <control_point x="115.568345323741" y="260.4307692307692" />
+   <control_point x="119.2517985611511" y="258.4615384615385" />
+   <control_point x="122.9352517985612" y="256.4923076923077" />
+   <control_point x="126.6187050359712" y="254.5230769230769" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="255" R="255" globalID="0" B="255" />
+   <left_color G="80" R="171" globalID="30" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="80" R="171" globalID="30" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="74.12949640287769" y="208.2461538461539" />
+   <control_point x="82.17198979133815" y="208.6987476036421" />
+   <control_point x="90.47653088094666" y="208.5918667343919" />
+   <control_point x="97.61151079136693" y="213.1692307692308" />
+   <control_point x="99.21796221971158" y="214.1998311471073" />
+   <control_point x="101.1414868105515" y="216.3282051282051" />
+   <control_point x="102.6762589928057" y="217.476923076923" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="24" R="171" globalID="20" B="127" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="255" R="255" globalID="20" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="179.1079136690647" y="150.1538461538462" />
+   <control_point x="176.4743980369487" y="152.9696820989548" />
+   <control_point x="169.3903007049868" y="160.8096292153321" />
+   <control_point x="174.5035971223021" y="166.2769230769231" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="167" R="213" globalID="10" B="204" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="255" R="255" globalID="0" B="255" />
+   <right_color G="196" R="227" globalID="10" B="221" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="10" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="180.4892086330935" y="143.2615384615385" />
+   <control_point x="204.1152660076937" y="149.2054696381347" />
+   <control_point x="200.0273200856093" y="146.7862381832551" />
+   <control_point x="182.3309352517986" y="152.1230769230769" />
+   <control_point x="176.8828423740787" y="153.7661013826497" />
+   <control_point x="179.4501831954783" y="163.817653578784" />
+   <control_point x="180.4892086330935" y="167.8769230769231" />
+   <control_point x="180.8136302022104" y="169.1443747988724" />
+   <control_point x="180.1787396709041" y="167.489066765778" />
+   <control_point x="181.4100719424459" y="171.6923076923077" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="80" R="171" globalID="30" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="211" R="234" globalID="30" B="229" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="30" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="206.273381294964" y="143.7538461538462" />
+   <control_point x="209.1781362771635" y="151.5184796639562" />
+   <control_point x="196.3144417043538" y="153.858375314388" />
+   <control_point x="192.9208633093525" y="156.5538461538462" />
+   <control_point x="184.4990915633876" y="163.2431391406412" />
+   <control_point x="184.9251361221556" y="171.985277898453" />
+   <control_point x="191.5395683453236" y="179.8153846153846" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="80" R="171" globalID="20" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="255" R="255" globalID="0" B="255" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="13" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="109.1223021582734" y="189.5384615384616" />
+   <control_point x="115.1232806396888" y="195.152838521555" />
+   <control_point x="127.1853438568213" y="185.5997318887047" />
+   <control_point x="128.4604316546763" y="192.9846153846154" />
+   <control_point x="129.8417266187049" y="200.9846153846154" />
+   <control_point x="149.6393254980293" y="211.927147769204" />
+   <control_point x="156.3165467625898" y="217.2307692307692" />
+   <control_point x="164.2048891006487" y="223.4963668592845" />
+   <control_point x="155.0827982030779" y="228.8638011135365" />
+   <control_point x="154.7050359712229" y="238.1538461538461" />
+   <control_point x="154.275153869278" y="248.7256390762929" />
+   <control_point x="155.3956834532373" y="243.3230769230769" />
+   <control_point x="158.1582733812949" y="252.9230769230769" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="255" R="255" globalID="40" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="255" R="255" globalID="40" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="40" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="105.4388489208632" y="235.9384615384615" />
+   <control_point x="116.740687705342" y="235.2518251711231" />
+   <control_point x="118.6824386268576" y="236.9445659540527" />
+   <control_point x="125.2374100719425" y="237.9656602782883" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="81" R="67" globalID="0" B="153" />
+   <left_color G="81" R="67" globalID="10" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="117" R="105" globalID="0" B="180" />
+   <right_color G="154" R="143" globalID="10" B="208" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="191.5395683453236" y="180.0615384615385" />
+   <control_point x="192.1541649615223" y="180.530520616342" />
+   <control_point x="199.073616216346" y="181.5162758506815" />
+   <control_point x="200.7482014388488" y="190.4" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="117" R="140" globalID="0" B="135" />
+   <left_color G="130" R="130" globalID="10" B="130" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="81" R="192" globalID="0" B="159" />
+   <right_color G="24" R="171" globalID="10" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="172.661870503597" y="160.6153846153846" />
+   <control_point x="158.1582733812948" y="169.6" />
+   <control_point x="156.0863309352517" y="171.2" />
+   <control_point x="141.8129496402877" y="178.3384615384615" />
+   <control_point x="134.8664723735693" y="181.8125620176355" />
+   <control_point x="130.5323741007193" y="180.3076923076923" />
+   <control_point x="132.3741007194244" y="184.7384615384615" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="80" R="171" globalID="20" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="24" R="171" globalID="0" B="127" />
+   <right_color G="80" R="171" globalID="20" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="181.4100719424459" y="171.6923076923077" />
+   <control_point x="181.777882351168" y="172.9478548739047" />
+   <control_point x="187.6065715807005" y="181.988958991381" />
+   <control_point x="191.5395683453236" y="180.0615384615385" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="130" R="130" globalID="0" B="130" />
+   <left_color G="130" R="130" globalID="10" B="130" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="211" R="234" globalID="0" B="229" />
+   <right_color G="255" R="255" globalID="10" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="60.54676258992797" y="210.5846153846154" />
+   <control_point x="69.98561151079119" y="205.2923076923077" />
+   <control_point x="72.05755395683445" y="204.1846153846154" />
+   <control_point x="76.89208633093517" y="199.5076923076923" />
+   <control_point x="81.62787985598806" y="194.926289121002" />
+   <control_point x="81.58349645525786" y="195.2599075802947" />
+   <control_point x="84.25899280575538" y="189.5384615384616" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="255" R="255" globalID="20" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="24" R="171" globalID="0" B="127" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="218.705035971223" y="160.4923076923077" />
+   <control_point x="218.705035971223" y="173.6312027217928" />
+   <control_point x="205.9227915407926" y="179.1790842900167" />
+   <control_point x="200.0575539568345" y="190.1538461538461" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="80" R="171" globalID="10" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="255" R="255" globalID="10" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="199.8273381294964" y="189.5384615384616" />
+   <control_point x="195.68345323741" y="196.5538461538461" />
+   <control_point x="195.2734331756986" y="198.053452060362" />
+   <control_point x="199.8273381294963" y="205.6615384615384" />
+   <control_point x="200.8372165256991" y="207.3487151090407" />
+   <control_point x="201.0551558752998" y="207.0974358974359" />
+   <control_point x="202.589928057554" y="208.2461538461539" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="130" R="130" globalID="0" B="130" />
+   <left_color G="130" R="130" globalID="20" B="130" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="255" R="255" globalID="0" B="255" />
+   <right_color G="80" R="171" globalID="20" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="4" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="172.8920863309352" y="165.7846153846154" />
+   <control_point x="175.5243040560976" y="169.0001962794624" />
+   <control_point x="177.7576757091744" y="172.1846153846154" />
+   <control_point x="181.4100719424459" y="172.1846153846154" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="113" R="143" globalID="0" B="137" />
+   <left_color G="130" R="130" globalID="10" B="130" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="138" R="199" globalID="0" B="187" />
+   <right_color G="80" R="171" globalID="10" B="153" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="103.136690647482" y="225.9692307692308" />
+   <control_point x="110.2733812949639" y="225.6" />
+   <control_point x="134.5852705970493" y="236.2112597156715" />
+   <control_point x="111.4244604316547" y="233.3538461538462" />
+   <control_point x="110.497048149275" y="233.2394287213751" />
+   <control_point x="109.5827338129496" y="233.025641025641" />
+   <control_point x="108.6618705035971" y="232.8615384615385" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="81" R="67" globalID="0" B="153" />
+   <left_color G="81" R="67" globalID="20" B="153" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="154" R="143" globalID="0" B="208" />
+   <right_color G="154" R="143" globalID="20" B="208" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="16" nb_left_colors="3" nb_right_colors="3" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="142.273381294964" y="253.3788395904437" />
+   <control_point x="148.4892086330934" y="256.6153846153846" />
+   <control_point x="153.0642753235256" y="263.169649351583" />
+   <control_point x="162.7625899280575" y="261.0461538461538" />
+   <control_point x="170.8677324392946" y="259.2714915058095" />
+   <control_point x="172.4316546762589" y="251.2" />
+   <control_point x="184.1726618705036" y="252.0682593856655" />
+   <control_point x="200.3830599036918" y="253.2670347551746" />
+   <control_point x="208.7628176624378" y="248.2224980350507" />
+   <control_point x="222.8489208633094" y="254.6894197952219" />
+   <control_point x="237.1223021582734" y="261.2423208191127" />
+   <control_point x="243.568345323741" y="266.0477815699659" />
+   <control_point x="259.2230215827338" y="269.9795221843003" />
+   <control_point x="285.4679338225269" y="276.5710470210763" />
+   <control_point x="334.0001723942108" y="260.9977618650016" />
+   <control_point x="359.136690647482" y="261.679180887372" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="46" R="171" globalID="0" B="137" />
+   <left_color G="80" R="171" globalID="29" B="153" />
+   <left_color G="130" R="130" globalID="50" B="130" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="165" R="205" globalID="0" B="193" />
+   <right_color G="255" R="255" globalID="29" B="255" />
+   <right_color G="104" R="171" globalID="50" B="151" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="50" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="328.6270073596295" y="255.4244627435228" />
+   <control_point x="318.8261283607765" y="255.4244627435228" />
+   <control_point x="302.3850492020175" y="261.5329985940952" />
+   <control_point x="283.9005705780203" y="264.7821650933922" />
+   <control_point x="273.6979373248851" y="266.5755645635653" />
+   <control_point x="270.3649383941122" y="270.1294235790319" />
+   <control_point x="256.2408004630777" y="266.7873870255071" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="80" R="171" globalID="0" B="153" />
+   <left_color G="255" R="255" globalID="20" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="255" R="255" globalID="20" B="255" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point x="65.3241379310345" y="241.9634464751958" />
+   <control_point x="77.62155539694089" y="250.1108868981038" />
+   <control_point x="91.79895893518301" y="252.7601018551526" />
+   <control_point x="105.9310344827586" y="253.9947780678851" />
+   <control_point x="108.2862591779068" y="254.2005468452278" />
+   <control_point x="115.5797673503031" y="253.4192408114079" />
+   <control_point x="117.9419498883651" y="253.4192408114079" />
+  </control_points_set>
+  <left_colors_set>
+   <left_color G="24" R="171" globalID="0" B="127" />
+   <left_color G="255" R="255" globalID="20" B="255" />
+  </left_colors_set>
+  <right_colors_set>
+   <right_color G="80" R="171" globalID="0" B="153" />
+   <right_color G="24" R="171" globalID="20" B="127" />
+  </right_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="20" />
+  </blur_points_set>
+ </curve>
+</curve_set>

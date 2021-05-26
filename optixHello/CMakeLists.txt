@@ -38,6 +38,8 @@ OPTIX_add_sample_executable( optixHello target_name
   optixHello.h
   params.h
   helperKernels.cu
+  glfw_events.h
+  glfw_events.cpp
 )
 
 target_link_libraries( ${target_name}

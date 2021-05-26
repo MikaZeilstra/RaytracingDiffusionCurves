@@ -26,21 +26,22 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 #pragma once
-#include <iostream>
-
-
-#include <rapidxml/rapidxml.hpp>
 #include <rapidxml/rapidxml_utils.hpp>
 
-#include <filesystem>
+#include <iostream>
 
-#include "params.h"
-
-
+#ifndef CALL_CHECK
+#define CALL_CHECK(call) \
+    if(call != 0){          \
+        std::cerr << "Error in Optix/CUDA call with number " << call << " at line " << __LINE__ << " in file " << __FILE__ << std::endl; \
+        throw std::exception(); \
+    }
+#endif // !
 
 
 static void printUChar4(uchar4* uchar);
 static void logFunction(unsigned int level, const char* tag, const char* message, void*);
 static bool loadSource(std::string& dest, const std::string& loc);
 static void pushColor(rapidxml::xml_node<>* color_node, std::vector<uint2>& ind, std::vector<float>& color_u, std::vector<float3>& color);
-static void pushPoint(rapidxml::xml_node<>* control_node, std::vector<float3>& vertexes);
+static void push4Points(rapidxml::xml_node<>*& control_node, std::vector<float3>& vertexes);
+static void pushSingle(rapidxml::xml_node<>*node, std::vector<uint2>&ind, std::vector<float>&us, std::vector<float>&target, const char* name);

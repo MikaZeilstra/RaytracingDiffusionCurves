@@ -1,5 +1,12 @@
 #pragma once
+#include <optix.h>
+#include <cuda_runtime.h>
+
+
 #define USE_DIFFUSION_CURVE_SAVE true
+#define USE_WEIGHT_INTERPOLATION false
+
+
 
 struct Params
 {
@@ -23,9 +30,9 @@ struct Params
     float3* color_right;
     float* color_right_u;
 
-    float* blur;
-
-      
+    uint2* weight_index;
+    float* weight;
+    float* weight_u;
     
     
     float zoom_factor;
