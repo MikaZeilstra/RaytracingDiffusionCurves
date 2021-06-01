@@ -1,31 +1,3 @@
-//
-// Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions
-// are met:
-//  * Redistributions of source code must retain the above copyright
-//    notice, this list of conditions and the following disclaimer.
-//  * Redistributions in binary form must reproduce the above copyright
-//    notice, this list of conditions and the following disclaimer in the
-//    documentation and/or other materials provided with the distribution.
-//  * Neither the name of NVIDIA CORPORATION nor the names of its
-//    contributors may be used to endorse or promote products derived
-//    from this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
-// EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-// PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-// EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-// PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
-// OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-
 #pragma once
 #include <optix.h>
 
@@ -34,6 +6,11 @@
 #include <math_functions.h>
 #include <optix_device.h>
 
+
+#include <curand.h>
+#include <curand_kernel.h>
+
+#define MAX_DISTRIBUTION 1024
 
 extern "C" {
 __constant__ Params params;
@@ -79,20 +56,21 @@ extern "C" __forceinline__ __device__ bool isRayRight(float t, float3 & ray_dire
     float2 curve_normal = {};
     calculateSplineNormal(t, v, curve_normal);
     
-    return (((curve_normal.x * ray_direction.x + curve_normal.y * ray_direction.y) <= 0));
+    return (((curve_normal.x * ray_direction.x + curve_normal.y * ray_direction.y) <= 0) ^ USE_DIFFUSION_CURVE_SAVE);
 }
 
 extern "C" __global__ void __raygen__rg()
 {
     const uint3 idx = optixGetLaunchIndex();
-    unsigned int p0, p1, p2, p3;
+    unsigned int p0, p1, p2, p3,p4;
     float4 color = {0,0,0,1};
+    float blur = 0;
     float3 ray_origin = {};
     float3 ray_direction = {};
     float weight_total = 0;
     float rot_cos, rot_sin;
 
-    sincospif(2 / params.number_of_rays_per_pixel, &rot_sin, &rot_cos);
+    
 
     //Flip y axis if loading diffusion curve save
 
@@ -107,16 +85,19 @@ extern "C" __global__ void __raygen__rg()
         printf("%f %f %f \n", ray_origin.x, ray_origin.y, ray_origin.z);
     }
     */
+
+    //Initiate ray in random direction
+    //curandState_t state;
+    //curand_init(idx.y * params.image_width + idx.x, 0, 0, &state);
+    //sincospif(((curand(&state) % MAX_DISTRIBUTION)/(float) MAX_DISTRIBUTION) * 2, &rot_sin, &rot_cos);
     ray_direction.x = 1;
     ray_direction.y = 0;
     ray_direction.z = 0;  
 
 
-    for (int i = 0; i < params.number_of_rays_per_pixel; i++) {
+    
 
-        
-        
-        
+    for (int i = 0; i < params.number_of_rays_per_pixel; i++) {
 
         optixTrace(
             params.traversable,
@@ -130,20 +111,23 @@ extern "C" __global__ void __raygen__rg()
             0,
             1,
             0,
-            p0,p1,p2,p3
+            p0,p1,p2,p3,p4
         );
-        
-        float4 result = { int_as_float(p0),int_as_float(p1), int_as_float(p2), int_as_float(p3) };
 
-        //keep track of color
-        weight_total += result.w;
+        //keep track of color weight
+        weight_total += int_as_float(p3);
 
         //Accumulate color
-        color.x += result.x * result.w;
-        color.y += result.y * result.w;
-        color.z += result.z * result.w;
+        color.x += int_as_float(p0) * int_as_float(p3);
+        color.y += int_as_float(p1) * int_as_float(p3);
+        color.z += int_as_float(p2) * int_as_float(p3);
+        blur += int_as_float(p4) * int_as_float(p3);
+
+        
+        
 
         //Rotate Ray
+        sincospif(2 / params.number_of_rays_per_pixel, &rot_sin, &rot_cos);
         ray_direction = { ray_direction.x * rot_cos - ray_direction.y * rot_sin,
                         ray_direction.x * rot_sin + ray_direction.y * rot_cos,
                         0 };
@@ -153,23 +137,19 @@ extern "C" __global__ void __raygen__rg()
     }
 
     
-    
     //Save average color
     params.image[idx.y * params.image_width + idx.x].x = color.x / weight_total;
     params.image[idx.y * params.image_width + idx.x].y = color.y / weight_total;
     params.image[idx.y * params.image_width + idx.x].z = color.z / weight_total;
 
+    //Save blur
+    //printf("%f\n", blur / weight_total);
+    params.blur_map[idx.y * params.image_width + idx.x] = blur / weight_total;
 }
 
 extern "C" __global__ void __miss__ms() 
 {
     const uint3 idx = optixGetLaunchIndex();
-    /*
-	optixSetPayload_0(float_as_int((idx.x % 256) / 256.0f));
-	optixSetPayload_1(float_as_int((idx.y % 256) / 256.0f));
-	optixSetPayload_2(float_as_int(((idx.x + idx.y + params.frame)  % 256) /256.0f));
-
-    */
 
     optixSetPayload_0(float_as_int(0));
     optixSetPayload_1(float_as_int(0));
@@ -189,8 +169,15 @@ extern "C" __global__ void __closesthit__ch()
     float3 ray_direction = optixGetWorldRayDirection();
     float3 ray_origin = optixGetWorldRayOrigin();
     
-    float weight_multiplier = 1;
 
+    int blur_ind;
+    float blur_ratio;
+    interpolate(params.blur_index[params.curve_map[vertex_index]], curve_u, params.blur_u, blur_ratio, blur_ind);
+
+    float blur = (1 - blur_ratio) * params.blur[blur_ind] + blur_ratio * params.blur[blur_ind + 1];
+    optixSetPayload_4(float_as_int(blur));
+
+    float weight_multiplier = 1;
     if (USE_WEIGHT_INTERPOLATION) {
         int weight_ind;
         float weight_ratio;
@@ -199,9 +186,9 @@ extern "C" __global__ void __closesthit__ch()
 
         weight_multiplier = (1 - weight_ratio) * params.weight[weight_ind] + weight_ratio * params.weight[weight_ind + 1];
     }
+    float weight = weight_multiplier * powf(rt,-2);
 
-    float weight = weight_multiplier * powf(rt,-(0.3));
-
+    
 
 
     optixSetPayload_3(float_as_int(weight));

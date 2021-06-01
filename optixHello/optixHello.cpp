@@ -1,30 +1,3 @@
-//
-// Copyright (c) 2021, NVIDIA CORPORATION. All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions
-// are met:
-//  * Redistributions of source code must retain the above copyright
-//    notice, this list of conditions and the following disclaimer.
-//  * Redistributions in binary form must reproduce the above copyright
-//    notice, this list of conditions and the following disclaimer in the
-//    documentation and/or other materials provided with the distribution.
-//  * Neither the name of NVIDIA CORPORATION nor the names of its
-//    contributors may be used to endorse or promote products derived
-//    from this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
-// EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-// PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-// EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-// PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
-// OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
 #pragma once
 #define GLFW_INCLUDE_NONE
 
@@ -60,7 +33,7 @@
 
 extern "C" __host__ void setFloatDevice(float* dest, unsigned int n, float src);
 
- extern "C" char embedded_ptx_code[];
+extern "C" char embedded_ptx_code[];
 
 
 template <typename T>
@@ -78,37 +51,36 @@ GLuint pbo;
 
 const float bspline_correction_matrix[] = { 6,-7,2,0,
                                             0,2,-1,0,
-                                            0, - 1,2,0,
+                                            0, -1,2,0,
                                             0,2,-7,6 };
 
-int main(int argc, char* argv[]){
-    
+int main(int argc, char* argv[]) {
+
 
 
     const int width = 512;
     const int height = 512;
     const float zoom_factor = 1;
-    const float offset_x = width / 2;
-    const float offset_y = height / 2;
-    const int number_of_rays = 256;
+    const float offset_x = 0;
+    const float offset_y = 0;
+    const int number_of_rays = 128;
+    const float endcap_size = 1;
     const std::string file_name = "/arch.xml";
 
 
-    const float curve_width = 1e-2f;
+    const float curve_width = 1e-4f;
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    
+
 
     Params params{};
-    
+
     GLFWwindow* window;
-    
-    //printf("ptx string :  %s", embedded_ptx_code);
 
     //Setup window
     glfwInit();
-    window = glfwCreateWindow(width,height,"My first window",NULL,NULL);
+    window = glfwCreateWindow(width, height, "My first window", NULL, NULL);
     glfwMakeContextCurrent(window);
 
     glfwSetWindowUserPointer(window, &params);
@@ -120,41 +92,41 @@ int main(int argc, char* argv[]){
 
 
     gladLoadGL();
-    glClearColor(0,0,0,1);
+    glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST);
-    
+
     glfwSwapBuffers(window);
 
     glGenBuffers(1, &pbo);
     glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbo);
     glBufferData(GL_PIXEL_UNPACK_BUFFER, 4 * sizeof(GLfloat) * width * height, NULL, GL_DYNAMIC_DRAW);
-   
+
     cudaGraphicsResource* d_pbo;
 
     cudaGraphicsGLRegisterBuffer(&d_pbo, pbo, cudaGraphicsRegisterFlagsWriteDiscard);
 
-	//Create Context
-	cudaFree(0);
-	CUcontext cuCtx = 0;
+    //Create Context
+    cudaFree(0);
+    CUcontext cuCtx = 0;
 
-	CALL_CHECK(optixInit());
+    CALL_CHECK(optixInit());
 
     char log[2048];
     size_t sizeof_log = sizeof(log);
 
 
-	OptixDeviceContextOptions Context_options = {};
+    OptixDeviceContextOptions Context_options = {};
     Context_options.logCallbackFunction = &logFunction;
     Context_options.logCallbackLevel = 4;
-    
+
     OptixDeviceContext context = nullptr;
 
     CUstream stream;
     CALL_CHECK(cudaStreamCreate(&stream));
 
-	optixDeviceContextCreate(cuCtx, &Context_options, &context);
-	
+    optixDeviceContextCreate(cuCtx, &Context_options, &context);
+
     //Load curves 
     std::vector<float3> vertices = {};
     std::vector<unsigned int> curve_map = {};
@@ -169,6 +141,10 @@ int main(int argc, char* argv[]){
     std::vector<float> color_right_u = {};
     std::vector<unsigned int> segmentIndices;
 
+    std::vector<uint2> blur_index = {};
+    std::vector<float> blur = {};
+    std::vector<float> blur_u = {};
+
     std::vector<uint2> weight_index = {};
     std::vector<float> weight = {};
     std::vector<float> weight_u = {};
@@ -180,7 +156,8 @@ int main(int argc, char* argv[]){
     unsigned int n_colors_left = 0;
     unsigned int n_colors_right = 0;
     unsigned int n_weights = 0;
-        
+    unsigned int n_blurs = 0;
+
 
     rapidxml::file<> xmlFile((std::filesystem::current_path().generic_string() + file_name).c_str());
     rapidxml::xml_document<> doc;
@@ -192,39 +169,129 @@ int main(int argc, char* argv[]){
     for (rapidxml::xml_node<>* curve = curve_set->first_node(); curve; curve = curve->next_sibling()) {
         //Read control points
         current_curve_segment = 0;
-        set_node = curve->first_node("control_points_set",18);
+        set_node = curve->first_node("control_points_set", 18);
 
         current_node = set_node->first_node();
-        while ( current_node->next_sibling()) {
-            //Insert the 4 vertexes of the spline
-            push4Points(current_node, vertices);
+
+
+        //Setup andcap for start of curve
+        if (USE_ENDCAPS) {
+            float3* endcap = new float3[4];
+            float3* first_curve = new float3[4];
+
+            rapidxml::xml_node<>* endcap_node = current_node;
+            endcap[0] = float3({
+                    (float)std::atof(endcap_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "y" : "x", 1)->value()),
+                    (float)std::atof(endcap_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "x" : "y", 1)->value()),
+                    0
+                });
+            endcap[3] = endcap[0];
+
+            for (int i = 0; i < 4; i++) {
+                first_curve[i] = float3({
+                    (float)std::atof(endcap_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "y" : "x", 1)->value()),
+                    (float)std::atof(endcap_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "x" : "y", 1)->value()),
+                    0
+                    });
+
+                endcap_node = endcap_node->next_sibling();
+            }
+
+            float3 tan = {};
+            getBezierTangent(0, first_curve, tan);
+
+            tan = { -tan.x, -tan.y, tan.z };
+
+            getEndcapPoints(endcap[0], tan, endcap[1], endcap[2]);
+            correctControlPoints(endcap, vertices);
+
+            delete[] endcap;
+            delete[] first_curve;
 
             segmentIndices.push_back(current_segment++);
-
-
             current_segment += 3;
+            curve_map.push_back(current_curve);
+            curve_index.push_back(current_curve_segment++);
+        }
+        
 
+        while (current_node->next_sibling()) {
+            //Insert the 4 vertexes of the spline
+            push4Points(current_node, vertices,width,height);
+
+            segmentIndices.push_back(current_segment++);
+            current_segment += 3;
+            curve_map.push_back(current_curve);
+            curve_index.push_back(current_curve_segment++);
+        }
+
+        if (USE_ENDCAPS) {
+            float3* endcap = new float3[4];
+            float3* first_curve = new float3[4];
+
+            rapidxml::xml_node<>* endcap_node = current_node;
+            endcap[0] = float3({
+                    (float)std::atof(endcap_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "y" : "x", 1)->value()),
+                    (float)std::atof(endcap_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "x" : "y", 1)->value()),
+                    0
+                });
+            endcap[3] = endcap[0];
+
+            endcap_node = endcap_node->previous_sibling()->previous_sibling()->previous_sibling();
+
+            for (int i = 0; i < 4; i++) {
+                first_curve[i] = float3({
+                    (float)std::atof(endcap_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "y" : "x", 1)->value()),
+                    (float)std::atof(endcap_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "x" : "y", 1)->value()),
+                    0
+                    });
+
+                endcap_node = endcap_node->next_sibling();
+            }
+
+            float3 tan = {};
+            getBezierTangent(1, first_curve, tan);
+
+            tan = { tan.x, tan.y, tan.z };
+
+            getEndcapPoints(endcap[0], tan, endcap[1], endcap[2]);
+            correctControlPoints(endcap, vertices);
+
+            delete[] endcap;
+            delete[] first_curve;
+
+            segmentIndices.push_back(current_segment++);
+            current_segment += 3;
             curve_map.push_back(current_curve);
             curve_index.push_back(current_curve_segment++);
         }
 
         //Read left colors
-        set_node = curve->first_node("left_colors_set",15);
+        set_node = curve->first_node("left_colors_set", 15);
         color_left_index.push_back({ n_colors_left ,0 });
         current_node = set_node->first_node();
+
+        if (USE_ENDCAPS) {
+            color_right.push_back({ 0,0,0 });
+            color_left.push_back({ 0,0,0 });
+            color_left.push_back({ 0,0,0 });
+
+            color_right_u.push_back(0);
+            color_left_u.push_back(0);
+            color_left_u.push_back(1);
+        }
 
         while (current_node) {
             pushColor(current_node, color_left_index, color_left_u, color_left);
             current_node = current_node->next_sibling();
         }
+
         //Make sure there is a color value for the last parameter value of the curve if we are using a diffusion curve save
         if (USE_DIFFUSION_CURVE_SAVE) {
             color_left.push_back(color_left.back());
             color_left_index.back().y++;
-            color_left_u.push_back(current_curve_segment);
-        }
-
-        n_colors_left += color_left_index.back().y;
+            color_left_u.push_back(current_curve_segment-1);
+        }     
 
 
         //Read right colors
@@ -241,27 +308,65 @@ int main(int argc, char* argv[]){
         if (USE_DIFFUSION_CURVE_SAVE) {
             color_right.push_back(color_right.back());
             color_right_index.back().y++;
-            color_right_u.push_back(current_curve_segment);
+            color_right_u.push_back(current_curve_segment-1);
         }
 
+        
+
+        if (USE_ENDCAPS) {
+            //First Colors
+            color_left.at(color_left_index.back().x) = (color_left.at(color_left_index.back().x + 2));
+            color_left.at(color_left_index.back().x + 1) = (color_right.at(color_right_index.back().x + 1));
+            color_left_index.back().y += 2;
+
+            color_right.at(color_right_index.back().x) = (color_left.at(color_left_index.back().x + 2));
+            color_right_index.back().y++;
+
+
+            //last Colors
+            color_left.push_back(color_right.back());
+            color_left.push_back(color_left.at(color_left.size() - 2));
+            color_left_index.back().y+=2;
+            
+            color_right.push_back(color_right.back());
+            color_right.push_back(color_left.at(color_left.size() - 3));
+            color_right_index.back().y+=2;
+
+            color_right_u.push_back(current_curve_segment-1);
+            color_right_u.push_back(current_curve_segment);
+            color_left_u.push_back(current_curve_segment-1);
+            color_left_u.push_back(current_curve_segment);
+
+        }
+
+        n_colors_left += color_left_index.back().y;
         n_colors_right += color_right_index.back().y;
 
-       
+        set_node = curve->first_node("blur_points_set", 15);
+        blur_index.push_back({ n_blurs , 0 });
+        current_node = set_node->first_node();
 
+        while (current_node) {
+            pushSingle(current_node, blur_index, blur_u, blur, "value");
+            current_node = current_node->next_sibling();
+        }
+
+
+        n_blurs += blur_index.back().y;
 
         if (USE_WEIGHT_INTERPOLATION) {
             set_node = curve->first_node("weight_set", 10);
 
             weight_index.push_back({ n_weights , 0 });
             current_node = set_node->first_node();
-            
+
             while (current_node) {
                 pushSingle(current_node, weight_index, weight_u, weight, "w");
                 current_node = current_node->next_sibling();
             }
 
 
-            n_weights += color_right_index.back().y;
+            n_weights += weight_index.back().y;
 
         }
 
@@ -269,16 +374,16 @@ int main(int argc, char* argv[]){
         current_curve++;
     }
 
-    
+
 
 
     //upload vertex data
     const size_t widths_size = sizeof(float) * vertices.size();
     CUdeviceptr d_widths = 0;
     CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&d_widths), widths_size));
-    setFloatDevice(reinterpret_cast<float*>(d_widths),vertices.size(),curve_width);
+    setFloatDevice(reinterpret_cast<float*>(d_widths), vertices.size(), curve_width);
 
- 
+
 
 
     const size_t vertices_size = sizeof(float3) * vertices.size();
@@ -290,8 +395,8 @@ int main(int argc, char* argv[]){
         cudaMemcpyHostToDevice,
         stream
     ));
-    
- 
+
+
     const size_t segmentIndices_size = sizeof(unsigned int) * segmentIndices.size();
     CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.segmentIndices), segmentIndices_size));
     CALL_CHECK(cudaMemcpyAsync(
@@ -387,6 +492,38 @@ int main(int argc, char* argv[]){
         stream
     ));
 
+    //Upload blur
+    const size_t blur_index_size = sizeof(uint2) * blur_index.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.blur_index), blur_index_size));
+    CALL_CHECK(cudaMemcpyAsync(
+        reinterpret_cast<void*>(params.blur_index),
+        blur_index.data(),
+        blur_index_size,
+        cudaMemcpyHostToDevice,
+        stream
+    ));
+
+    const size_t blur_size = sizeof(float) * blur.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.blur), blur_size));
+    CALL_CHECK(cudaMemcpyAsync(
+        reinterpret_cast<void*>(params.blur),
+        blur.data(),
+        blur_size,
+        cudaMemcpyHostToDevice,
+        stream
+    ));
+
+    const size_t blur_u_size = sizeof(float) * blur_u.size();
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.blur_u), blur_u_size));
+    CALL_CHECK(cudaMemcpyAsync(
+        reinterpret_cast<void*>(params.blur_u),
+        blur_u.data(),
+        blur_u_size,
+        cudaMemcpyHostToDevice,
+        stream
+    ));
+
+
     //Upload Weights
     if (USE_WEIGHT_INTERPOLATION) {
         const size_t weight_index_size = sizeof(uint2) * weight_index.size();
@@ -467,10 +604,10 @@ int main(int argc, char* argv[]){
         reinterpret_cast<void**>(&d_gas_output_buffer),
         gas_buffer_sizes.outputSizeInBytes
     ));
-        
+
     CALL_CHECK(optixAccelBuild(
         context,
-        0,                 
+        0,
         &accel_options,
         &curve_input,
         1,                  // num build inputs
@@ -479,7 +616,7 @@ int main(int argc, char* argv[]){
         d_gas_output_buffer,
         gas_buffer_sizes.outputSizeInBytes,
         &gas_handle,
-        nullptr, 
+        nullptr,
         0
     ));
 
@@ -499,7 +636,7 @@ int main(int argc, char* argv[]){
     OptixPipelineCompileOptions pipeline_compile_options = {};
     pipeline_compile_options.usesMotionBlur = false;
     pipeline_compile_options.traversableGraphFlags = OPTIX_TRAVERSABLE_GRAPH_FLAG_ALLOW_SINGLE_GAS;
-    pipeline_compile_options.numPayloadValues = 4;
+    pipeline_compile_options.numPayloadValues = 5;
     pipeline_compile_options.numAttributeValues = 0;
 
     pipeline_compile_options.exceptionFlags = OPTIX_EXCEPTION_FLAG_NONE;
@@ -538,7 +675,7 @@ int main(int argc, char* argv[]){
     OptixProgramGroup raygen_prog_group = nullptr;
     OptixProgramGroup miss_prog_group = nullptr;
     OptixProgramGroup hitgroup_prog_group = nullptr;
-    
+
     OptixProgramGroupOptions program_group_options = {}; // Initialize to zeros
 
     OptixProgramGroupDesc raygen_prog_group_desc = {}; //
@@ -586,7 +723,7 @@ int main(int argc, char* argv[]){
         log,
         &sizeof_log,
         &hitgroup_prog_group
-    ));  
+    ));
     OptixProgramGroup program_groups[] = { raygen_prog_group, miss_prog_group, hitgroup_prog_group };
 
 
@@ -677,8 +814,8 @@ int main(int argc, char* argv[]){
     sbt.hitgroupRecordBase = hg_record;
     sbt.hitgroupRecordCount = 1;
     sbt.hitgroupRecordStrideInBytes = sizeof(HitGroupSbtRecord);
-    
-    
+
+
 
 
     //Setup Parameters
@@ -686,11 +823,16 @@ int main(int argc, char* argv[]){
     cudaGraphicsMapResources(1, &d_pbo, NULL);
     cudaGraphicsResourceGetMappedPointer(reinterpret_cast<void**>(&(params.image)), NULL, d_pbo);
 
-    params.image_width = width;
+    CALL_CHECK(cudaMalloc(
+        reinterpret_cast<void**>(&params.blur_map),
+        sizeof(float) * width * height
+    ))
+
+        params.image_width = width;
     params.image_height = height;
     params.frame = 0;
     params.traversable = gas_handle;
-    params.zoom_factor =  zoom_factor;
+    params.zoom_factor = zoom_factor;
     params.offset_x = offset_x;
     params.offset_y = offset_y;
     params.number_of_rays_per_pixel = number_of_rays;
@@ -726,7 +868,7 @@ int main(int argc, char* argv[]){
 
         //Launch pipeline
         CALL_CHECK(optixLaunch(pipeline, stream, d_param, sizeof(Params), &sbt, width, height, 1))
-        CALL_CHECK(cudaStreamSynchronize(stream));
+            CALL_CHECK(cudaStreamSynchronize(stream));
 
 
         glDrawPixels(width, height, GL_RGBA, GL_FLOAT, 0);
@@ -742,10 +884,10 @@ int main(int argc, char* argv[]){
         //glfwSwapBuffers(window);
     };
     std::cout << std::endl;
-    std::cout << "Average frame time  : " << total_frame_time / (float) params.frame  << " ms" << std::endl;
-    
+    std::cout << "Average frame time  : " << total_frame_time / (float)params.frame << " ms" << std::endl;
 
-    
+
+
     //Cleanup
 
 
@@ -760,7 +902,7 @@ int main(int argc, char* argv[]){
     CALL_CHECK(cudaFree(reinterpret_cast<void*>(sbt.raygenRecord)));
     CALL_CHECK(cudaFree(reinterpret_cast<void*>(sbt.missRecordBase)));
     CALL_CHECK(cudaFree(reinterpret_cast<void*>(sbt.hitgroupRecordBase)));
-    
+
 
     CALL_CHECK(optixPipelineDestroy(pipeline));
     CALL_CHECK(optixProgramGroupDestroy(hitgroup_prog_group));
@@ -776,7 +918,7 @@ int main(int argc, char* argv[]){
 
 
 static void logFunction(unsigned int level, const char* tag, const char* message, void*) {
-    printf("%d - %s %s \n" ,level, tag  , message);
+    printf("%d - %s %s \n", level, tag, message);
 }
 
 static void printUChar4(uchar4* uchar) {
@@ -796,7 +938,7 @@ static bool loadSource(std::string& dest, const std::string& loc) {
 // B and R color channels switched if load diffusion curve xml
 #pragma inline
 static void pushColor(rapidxml::xml_node<>* color_node, std::vector<uint2>& ind, std::vector<float>& color_u, std::vector<float3>& color) {
-    float u = (std::atof(color_node->first_attribute("globalID", 8)->value()) / 10.0f);
+    float u = (std::atof(color_node->first_attribute("globalID", 8)->value()) / 10.0f + (USE_ENDCAPS ? 1.0f : 0.0f));
     color.push_back({
         std::atoi(color_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "B" : "R",1)->value()) / 255.0f,
         std::atoi(color_node->first_attribute("G",1)->value()) / 255.0f,
@@ -808,46 +950,77 @@ static void pushColor(rapidxml::xml_node<>* color_node, std::vector<uint2>& ind,
 
 //Switch x y if loading diffusion curve xml
 #pragma inline
-static void push4Points(rapidxml::xml_node<>*& control_node, std::vector<float3>& vertices) {
-    float* controls_xy = new float[8]; 
+static void push4Points(rapidxml::xml_node<>*& control_node, std::vector<float3>& vertices, int width, int height) {
+    float3* controls_xy = new float3[4];
 
-    for (int i = 0; i < 6; i+= 2) {
-        controls_xy[i] = (float)std::atof((control_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "y" : "x", 1))->value());
-        controls_xy[i+1] = (float)std::atof((control_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "x" : "y", 1))->value());
+    for (int i = 0; i < 3; i++) {
+        controls_xy[i].x = (float)std::atof((control_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "y" : "x", 1))->value()) - (width/2);
+        controls_xy[i].y = (float)std::atof((control_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "x" : "y", 1))->value()) - (height/2);
+        controls_xy[i].z = 0;
         control_node = control_node->next_sibling();
     }
 
-    controls_xy[6] = (float)std::atof((control_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "y" : "x", 1))->value());
-    controls_xy[7] = (float)std::atof((control_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "x" : "y", 1))->value());
+    controls_xy[3].x = (float)std::atof((control_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "y" : "x", 1))->value()) - (width / 2);
+    controls_xy[3].y = (float)std::atof((control_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "x" : "y", 1))->value()) - (height / 2);
+    controls_xy[3].z = 0;
 
 
-    for (int i = 0; i < 4; i++) {
-        if (USE_DIFFUSION_CURVE_SAVE) {
-            vertices.push_back({
-                controls_xy[0] * bspline_correction_matrix[i * 4] + controls_xy[2] * bspline_correction_matrix[i * 4 + 1] + controls_xy[4] * bspline_correction_matrix[i * 4 + 2] + controls_xy[6] * bspline_correction_matrix[i * 4 + 3],
-                controls_xy[1] * bspline_correction_matrix[i * 4] + controls_xy[3] * bspline_correction_matrix[i * 4 + 1] + controls_xy[5] * bspline_correction_matrix[i * 4 + 2] + controls_xy[7] * bspline_correction_matrix[i * 4 + 3],
-                0
-            });
-        }
-        else {
-            vertices.push_back({
-                controls_xy[i * 2],
-                controls_xy[i * 2 + 1],
-                0
-            });
-        
-        }
-        
-
-    }
+    correctControlPoints(controls_xy, vertices);
 
     delete[] controls_xy;
 }
 
+static void correctControlPoints(float3* xy_control_points, std::vector<float3>& controls) {
+    for (int i = 0; i < 4; i++) {
+        controls.push_back({
+                xy_control_points[0].x * bspline_correction_matrix[i * 4] + xy_control_points[1].x * bspline_correction_matrix[i * 4 + 1] + xy_control_points[2].x * bspline_correction_matrix[i * 4 + 2] + xy_control_points[3].x * bspline_correction_matrix[i * 4 + 3],
+                xy_control_points[0].y * bspline_correction_matrix[i * 4] + xy_control_points[1].y * bspline_correction_matrix[i * 4 + 1] + xy_control_points[2].y * bspline_correction_matrix[i * 4 + 2] + xy_control_points[3].y * bspline_correction_matrix[i * 4 + 3],
+                xy_control_points[i].z
+            });
+    }
+}
+
+
 #pragma inline
 static void pushSingle(rapidxml::xml_node<>* node, std::vector<uint2>& ind, std::vector<float>& us, std::vector<float>& target, const char* name) {
-    float u = (std::atof(node->first_attribute("globalID", 8)->value()) / 10.0f);
+    float u = (std::atof(node->first_attribute("globalID", 8)->value()) / 10.0f + (USE_ENDCAPS ? 1.0f : 0.0f));
     target.push_back(std::atof(node->first_attribute(name)->value()));
     us.push_back(u);
     ind.back().y++;
+}
+
+#pragma inline
+static void getBezierTangent(float t, float3* v, float3& result) {
+    result.x = (3 * t * t * v[3].x + v[0].x * (-3 * t * t + 6 * t - 3) + v[1].x * (9 * t * t - 12 * t + 3) + v[2].x * (-9 * t * t + 6 * t));
+    result.y = (3 * t * t * v[3].y + v[0].y * (-3 * t * t + 6 * t - 3) + v[1].y * (9 * t * t - 12 * t + 3) + v[2].y * (-9 * t * t + 6 * t));   
+}
+
+
+#pragma inline
+static void getEndcapPoints(float3& endpoint, float3& tangent, float3& point1, float3& point2) {
+    //get cos and sin using dot and cross product
+    float tangentNormalize = invSqrt(tangent.x * tangent.x + tangent.y * tangent.y);
+    float cos = tangent.y * tangentNormalize ;
+    float sin = tangent.x * tangentNormalize ;
+
+    //use rotation matrix on points 1,-1 and 1,1 to get control points
+    point1 = { -cos - sin  + endpoint.x,  -sin + cos  + endpoint.y,0 };
+    point2 = { cos - sin  + endpoint.x, sin + cos  + endpoint.y, 0 };
+}
+
+//Always wanted to use this taken from wikipedia fast inverse square root
+float invSqrt(float number) {
+    union {
+        float f;
+        uint32_t i;
+    } conv;
+
+    float x2;
+    const float threehalfs = 1.5F;
+
+    x2 = number * 0.5F;
+    conv.f = number;
+    conv.i = 0x5f3759df - (conv.i >> 1);
+    conv.f = conv.f * (threehalfs - (x2 * conv.f * conv.f));
+    return conv.f;
 }

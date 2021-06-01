@@ -15,3 +15,6 @@ extern "C" __global__ void setFloatKernel(float* dest, unsigned int n, float src
 extern "C" __host__ void setFloatDevice(float* dest, unsigned int n, float src) {
    setFloatKernel << <256, 16 >> > (dest, n, src);
 }
+
+extern "C" __host__ void gaussianBlur(float4 * dest, float4 * source, float* strengths, int width, int height) {
+}
