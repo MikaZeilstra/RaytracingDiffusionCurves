@@ -79,12 +79,7 @@ extern "C" __global__ void __raygen__rg()
         ((int) ((params.image_height - idx.y) - (params.image_height / 2))) * params.zoom_factor + params.offset_y :
         ((int) (idx.y - (params.image_height / 2))) * params.zoom_factor + params.offset_y;
     ray_origin.z = 0;
-    
-    /*
-    if (idx.x < 8 && idx.y < 8) {
-        printf("%f %f %f \n", ray_origin.x, ray_origin.y, ray_origin.z);
-    }
-    */
+   
 
     //Initiate ray in random direction
     //curandState_t state;
@@ -117,6 +112,10 @@ extern "C" __global__ void __raygen__rg()
         //keep track of color weight
         weight_total += int_as_float(p3);
 
+        if (idx.x == 0 && idx.y == 256) {
+           // printf("%.30f \n",  p3);
+        }
+
         //Accumulate color
         color.x += int_as_float(p0) * int_as_float(p3);
         color.y += int_as_float(p1) * int_as_float(p3);
@@ -135,7 +134,7 @@ extern "C" __global__ void __raygen__rg()
 
         
     }
-
+   
     
     //Save average color
     params.image[idx.y * params.image_width + idx.x].x = color.x / weight_total;
@@ -173,29 +172,24 @@ extern "C" __global__ void __closesthit__ch()
     int blur_ind;
     float blur_ratio;
     interpolate(params.blur_index[params.curve_map[vertex_index]], curve_u, params.blur_u, blur_ratio, blur_ind);
-
     float blur = (1 - blur_ratio) * params.blur[blur_ind] + blur_ratio * params.blur[blur_ind + 1];
     optixSetPayload_4(float_as_int(blur));
 
-    float weight_multiplier = 1;
-    if (USE_WEIGHT_INTERPOLATION) {
-        int weight_ind;
-        float weight_ratio;
+    int weight_ind;
+    float weight_ratio;
+    interpolate(params.weight_index[params.curve_map[vertex_index]], curve_u, params.weight_u, weight_ratio, weight_ind);
+    float weight_multiplier = (1 - weight_ratio) * params.weight[weight_ind] + weight_ratio * params.weight[weight_ind + 1];
 
-        interpolate(params.weight_index[params.curve_map[vertex_index]], curve_u, params.weight_u, weight_ratio, weight_ind);
+    int weight_degree_ind;
+    float weight_degree_ratio;
+    interpolate(params.weight_degree_index[params.curve_map[vertex_index]], curve_u, params.weight_degree_u, weight_degree_ratio, weight_degree_ind);
+    float weight_degree = (1 - weight_degree_ratio) * params.weight_degree[weight_degree_ind] + weight_degree_ratio * params.weight_degree[weight_degree_ind + 1];
 
-        weight_multiplier = (1 - weight_ratio) * params.weight[weight_ind] + weight_ratio * params.weight[weight_ind + 1];
+    if (optixGetLaunchIndex().x == 0 && optixGetLaunchIndex().y == 256) {
+        //printf("%f \n", powf(weight_degree, rt));
     }
-    float weight = weight_multiplier * powf(rt,-2);
 
-    
-
-
-    optixSetPayload_3(float_as_int(weight));
-
-    if (rt < 1e-2) {
-        optixSetPayload_3(float_as_int(0));
-    }
+    optixSetPayload_3(float_as_int(weight_multiplier * powf(rt,-weight_degree)));
     
     
     

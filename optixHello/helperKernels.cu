@@ -1,15 +1,12 @@
 #pragma once
 #include<cuda_runtime_api.h>
 #include<device_launch_parameters.h>
+#include<stdio.h>
 
 extern "C" __global__ void setFloatKernel(float* dest, unsigned int n, float src) {
-    for (int i = blockIdx.x * blockDim.x + threadIdx.x;
-        i < n;
-        i += blockDim.x * gridDim.x) {
+    for (int i = blockIdx.x * blockDim.x + threadIdx.x; i < n; i += blockDim.x * gridDim.x){
         dest[i] = src;
     }
-
-
 }
 
 extern "C" __host__ void setFloatDevice(float* dest, unsigned int n, float src) {

@@ -5,7 +5,7 @@
 
 
 
-#define USE_DIFFUSION_CURVE_SAVE false
+#define USE_DIFFUSION_CURVE_SAVE true
 #define USE_ENDCAPS              false
 #define USE_WEIGHT_INTERPOLATION false
 
@@ -45,6 +45,9 @@ struct Params
     float* weight;
     float* weight_u;
     
+    uint2* weight_degree_index;
+    float* weight_degree;
+    float* weight_degree_u;
     
     float zoom_factor;
     float offset_x;

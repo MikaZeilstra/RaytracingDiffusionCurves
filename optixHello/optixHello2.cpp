@@ -55,15 +55,20 @@ const float bspline_correction_matrix[] = { 6,-7,2,0,
                                             0,2,-7,6 };
 
 int main(int argc, char* argv[]) {
-    float zoom_factor = 1   ;
-    float offset_x = 0;
-    float offset_y = 0;
-    const int number_of_rays = 255;
-    float default_weight_degree = 7;
-    const std::string file_name = "/weight_demo.xml";
-    const float curve_width = 1e-3f;
-    const float endcap_size = 8;
 
+
+
+    int width = 0;
+    int height = 0;
+    const float zoom_factor = 1;
+    const float offset_x = 0;
+    const float offset_y = 0;
+    const int number_of_rays = 512;
+    const float endcap_size = 8;
+    const std::string file_name = "/lady_bug.xml";
+
+
+    const float curve_width = 1e-3f;
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
@@ -74,9 +79,8 @@ int main(int argc, char* argv[]) {
     rapidxml::xml_node<>* set_node;
     rapidxml::xml_node<>* current_node;
 
-    int width = std::atoi(curve_set->first_attribute("image_width")->value());
-    int height = std::atoi(curve_set->first_attribute("image_height")->value());
-    
+    width = std::atoi(curve_set->first_attribute("image_width")->value());
+    height = std::atoi(curve_set->first_attribute("image_height")->value());
 
     Params params{};
 
@@ -153,10 +157,6 @@ int main(int argc, char* argv[]) {
     std::vector<float> weight = {};
     std::vector<float> weight_u = {};
 
-    std::vector<uint2> weight_degree_index = {};
-    std::vector<float> weight_degree = {};
-    std::vector<float> weight_degree_u = {};
-
     int current_segment = 0;
     int current_curve = 0;
     int current_curve_segment = 0;
@@ -164,23 +164,20 @@ int main(int argc, char* argv[]) {
     unsigned int n_colors_left = 0;
     unsigned int n_colors_right = 0;
     unsigned int n_weights = 0;
-    unsigned int n_weights_degree = 0;
     unsigned int n_blurs = 0;
 
 
    
     for (rapidxml::xml_node<>* curve = curve_set->first_node(); curve; curve = curve->next_sibling()) {
-
         //Read control points
         current_curve_segment = 0;
         set_node = curve->first_node("control_points_set", 18);
 
         current_node = set_node->first_node();
 
-        bool use_endcap = (curve->first_attribute("use_endcap") ? curve->first_attribute("use_endcap")->value() : "") == std::string("true");
 
         //Setup andcap for start of curve
-        if (use_endcap) {
+        if (USE_ENDCAPS) {
             float3* endcap = new float3[4];
             float3* first_curve = new float3[4];
 
@@ -230,7 +227,7 @@ int main(int argc, char* argv[]) {
             curve_index.push_back(current_curve_segment++);
         }
 
-        if (use_endcap) {
+        if (USE_ENDCAPS) {
             float3* endcap = new float3[4];
             float3* first_curve = new float3[4];
 
@@ -276,23 +273,27 @@ int main(int argc, char* argv[]) {
         color_left_index.push_back({ n_colors_left ,0 });
         current_node = set_node->first_node();
 
-        //Reserve space for endcaps
-        if (use_endcap) {
-            color_right.push_back({ 0,0,0 });
+        if (USE_ENDCAPS) {
             color_right.push_back({ 0,0,0 });
             color_left.push_back({ 0,0,0 });
             color_left.push_back({ 0,0,0 });
 
             color_right_u.push_back(0);
-            color_right_u.push_back(1);
             color_left_u.push_back(0);
             color_left_u.push_back(1);
         }
 
         while (current_node) {
-            pushColor(current_node, color_left_index, color_left_u, color_left,use_endcap);
+            pushColor(current_node, color_left_index, color_left_u, color_left);
             current_node = current_node->next_sibling();
-        }   
+        }
+
+        //Make sure there is a color value for the last parameter value of the curve if we are using a diffusion curve save
+        if (USE_DIFFUSION_CURVE_SAVE) {
+            color_left.push_back(color_left.back());
+            color_left_index.back().y++;
+            color_left_u.push_back(current_curve_segment-1);
+        }     
 
 
         //Read right colors
@@ -301,7 +302,7 @@ int main(int argc, char* argv[]) {
         current_node = set_node->first_node();
 
         while (current_node) {
-            pushColor(current_node, color_right_index, color_right_u, color_right,use_endcap);
+            pushColor(current_node, color_right_index, color_right_u, color_right);
             current_node = current_node->next_sibling();
         }
 
@@ -309,27 +310,22 @@ int main(int argc, char* argv[]) {
         if (USE_DIFFUSION_CURVE_SAVE) {
             color_right.push_back(color_right.back());
             color_right_index.back().y++;
-            color_right_u.push_back(current_curve_segment - (use_endcap ? 1 : 0));
-
-            color_left.push_back(color_left.back());
-            color_left_index.back().y++;
-            color_left_u.push_back(current_curve_segment - (use_endcap ? 1 : 0));
+            color_right_u.push_back(current_curve_segment-1);
         }
 
         
-        //Setup Colors for endcaps
-        if (use_endcap) {
+
+        if (USE_ENDCAPS) {
             //First Colors
             color_left.at(color_left_index.back().x) = (color_left.at(color_left_index.back().x + 2));
-            color_left.at(color_left_index.back().x + 1) = (color_right.at(color_right_index.back().x + 2));
+            color_left.at(color_left_index.back().x + 1) = (color_right.at(color_right_index.back().x + 1));
             color_left_index.back().y += 2;
 
             color_right.at(color_right_index.back().x) = (color_left.at(color_left_index.back().x + 2));
-            color_right.at(color_right_index.back().x + 1) = (color_right.at(color_right_index.back().x + 2));
-            color_right_index.back().y += 2;
+            color_right_index.back().y++;
 
 
-            //last Colors 
+            //last Colors
             color_left.push_back(color_right.back());
             color_left.push_back(color_left.at(color_left.size() - 2));
             color_left_index.back().y+=2;
@@ -348,110 +344,38 @@ int main(int argc, char* argv[]) {
         n_colors_left += color_left_index.back().y;
         n_colors_right += color_right_index.back().y;
 
-
-        //Read blur
         set_node = curve->first_node("blur_points_set", 15);
         blur_index.push_back({ n_blurs , 0 });
-
         current_node = set_node->first_node();
 
-        if (use_endcap) {
-            blur.push_back(0);
-            blur_u.push_back(0);
-            blur_index.back().y++;
-        }
-
         while (current_node) {
-            pushSingle(current_node, blur_index, blur_u, blur, "value",use_endcap);
+            pushSingle(current_node, blur_index, blur_u, blur, "value");
             current_node = current_node->next_sibling();
         }
 
-        if (use_endcap) {
-            blur.at(blur_index.back().x) = blur.at(blur_index.back().x + 1);
-            blur.push_back(blur.back());
-            blur_u.push_back(current_curve_segment);
-            blur_index.back().y++;
-        }
 
         n_blurs += blur_index.back().y;
 
+        if (USE_WEIGHT_INTERPOLATION) {
+            set_node = curve->first_node("weight_set", 10);
 
-        //Read weight multiplier
-        set_node = curve->first_node("weight_set", 10);
-        weight_index.push_back({ n_weights , 0 });
-
-        if (set_node) {
-            if (use_endcap) {
-                weight.push_back(0);
-                weight_u.push_back(0);
-                weight_index.back().y++;
-            }
-
-
+            weight_index.push_back({ n_weights , 0 });
             current_node = set_node->first_node();
+
             while (current_node) {
-                pushSingle(current_node, weight_index, weight_u, weight, "w",use_endcap);
+                pushSingle(current_node, weight_index, weight_u, weight, "w");
                 current_node = current_node->next_sibling();
             }
 
-            if (use_endcap) {
-                weight.at(weight_index.back().x) = weight.at(weight_index.back().x + 1);
-                weight.push_back(weight.back());
-                weight_u.push_back(current_curve_segment);
-                weight_index.back().y++;
-            }
+
+            n_weights += weight_index.back().y;
 
         }
-        else {
-            weight.push_back(1);
-            weight.push_back(1);
-            weight_u.push_back(0);
-            weight_u.push_back(current_curve_segment);
-            weight_index.back().y += 2;
-        }
 
-        n_weights += weight_index.back().y;
-
-        
-        //Read weight base
-        set_node = curve->first_node("weight_degree_set");
-        weight_degree_index.push_back({ n_weights_degree , 0 });
-
-        if (set_node) {
-            if (use_endcap) {
-                weight_degree.push_back(default_weight_degree);
-                weight_degree_u.push_back(0);
-                weight_degree_index.back().y++;
-            }
-
-
-            current_node = set_node->first_node();
-            while (current_node) {
-                pushSingle(current_node, weight_degree_index, weight_degree_u, weight_degree, "w", use_endcap);
-                current_node = current_node->next_sibling();
-            }
-
-            if (use_endcap) {
-                weight_degree.at(weight_degree_index.back().x) = weight_degree.at(weight_degree_index.back().x + 1);
-                weight_degree.push_back(weight_degree.back());
-                weight_degree_u.push_back(current_curve_segment);
-                weight_degree_index.back().y++;
-            }
-
-        }
-        else {
-            weight_degree.push_back(default_weight_degree);
-            weight_degree.push_back(default_weight_degree);
-            weight_degree_u.push_back(0);
-            weight_degree_u.push_back(current_curve_segment);
-            weight_degree_index.back().y += 2;
-        }
-
-        n_weights_degree += weight_degree_index.back().y;
 
         current_curve++;
     }
-    
+
 
 
 
@@ -603,66 +527,39 @@ int main(int argc, char* argv[]) {
 
 
     //Upload Weights
-    const size_t weight_index_size = sizeof(uint2) * weight_index.size();
-    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.weight_index), weight_index_size));
-    CALL_CHECK(cudaMemcpyAsync(
-        reinterpret_cast<void*>(params.weight_index),
-        weight_index.data(),
-        weight_index_size,
-        cudaMemcpyHostToDevice,
-        stream
-    ));
+    if (USE_WEIGHT_INTERPOLATION) {
+        const size_t weight_index_size = sizeof(uint2) * weight_index.size();
+        CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.weight_index), weight_index_size));
+        CALL_CHECK(cudaMemcpyAsync(
+            reinterpret_cast<void*>(params.weight_index),
+            weight_index.data(),
+            weight_index_size,
+            cudaMemcpyHostToDevice,
+            stream
+        ));
 
-    const size_t weight_size = sizeof(float) * weight.size();
-    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.weight), weight_size));
-    CALL_CHECK(cudaMemcpyAsync(
-        reinterpret_cast<void*>(params.weight),
-        weight.data(),
-        weight_size,
-        cudaMemcpyHostToDevice,
-        stream
-    ));
+        const size_t weight_size = sizeof(float) * weight.size();
+        CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.weight), weight_size));
+        CALL_CHECK(cudaMemcpyAsync(
+            reinterpret_cast<void*>(params.weight),
+            weight.data(),
+            weight_size,
+            cudaMemcpyHostToDevice,
+            stream
+        ));
 
-    const size_t weight_u_size = sizeof(float) * weight_u.size();
-    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.weight_u), weight_u_size));
-    CALL_CHECK(cudaMemcpyAsync(
-        reinterpret_cast<void*>(params.weight_u),
-        weight_u.data(),
-        weight_u_size,
-        cudaMemcpyHostToDevice,
-        stream
-    ));
+        const size_t weight_u_size = sizeof(float) * weight_u.size();
+        CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.weight_u), weight_u_size));
+        CALL_CHECK(cudaMemcpyAsync(
+            reinterpret_cast<void*>(params.weight_u),
+            weight_u.data(),
+            weight_u_size,
+            cudaMemcpyHostToDevice,
+            stream
+        ));
+    }
 
-    //Upload Weights base
-    const size_t weight_degree_index_size = sizeof(uint2) * weight_degree_index.size();
-    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.weight_degree_index), weight_degree_index_size));
-    CALL_CHECK(cudaMemcpyAsync(
-        reinterpret_cast<void*>(params.weight_degree_index),
-        weight_degree_index.data(),
-        weight_degree_index_size,
-        cudaMemcpyHostToDevice,
-        stream
-    ));
 
-    const size_t weight_degree_size = sizeof(float) * weight_degree.size();
-    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.weight_degree), weight_degree_size));
-    CALL_CHECK(cudaMemcpyAsync(
-        reinterpret_cast<void*>(params.weight_degree),
-        weight_degree.data(),
-        weight_degree_size,
-        cudaMemcpyHostToDevice,
-        stream
-    ));
-
-    const size_t weight_degree_u_size = sizeof(float) * weight_degree_u.size();
-    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.weight_degree_u), weight_degree_u_size));
-    CALL_CHECK(cudaMemcpyAsync(
-        reinterpret_cast<void*>(params.weight_degree_u),
-        weight_degree_u.data(),
-        weight_degree_u_size,
-        cudaMemcpyHostToDevice,
-        stream
-    ));
 
     OptixBuildInput curve_input = {};
     curve_input.type = OPTIX_BUILD_INPUT_TYPE_CURVES;
@@ -933,7 +830,7 @@ int main(int argc, char* argv[]) {
         sizeof(float) * width * height
     ))
 
-    params.image_width = width;
+        params.image_width = width;
     params.image_height = height;
     params.frame = 0;
     params.traversable = gas_handle;
@@ -1041,8 +938,9 @@ static bool loadSource(std::string& dest, const std::string& loc) {
 }
 
 // B and R color channels switched if load diffusion curve xml
-static void pushColor(rapidxml::xml_node<>* color_node, std::vector<uint2>& ind, std::vector<float>& color_u, std::vector<float3>& color, bool use_endcap) {
-    float u = (std::atof(color_node->first_attribute("globalID", 8)->value()) / 10.0f + (use_endcap ? 1.0f : 0.0f));
+#pragma inline
+static void pushColor(rapidxml::xml_node<>* color_node, std::vector<uint2>& ind, std::vector<float>& color_u, std::vector<float3>& color) {
+    float u = (std::atof(color_node->first_attribute("globalID", 8)->value()) / 10.0f + (USE_ENDCAPS ? 1.0f : 0.0f));
     color.push_back({
         std::atoi(color_node->first_attribute(USE_DIFFUSION_CURVE_SAVE ? "B" : "R",1)->value()) / 255.0f,
         std::atoi(color_node->first_attribute("G",1)->value()) / 255.0f,
@@ -1053,6 +951,7 @@ static void pushColor(rapidxml::xml_node<>* color_node, std::vector<uint2>& ind,
 }
 
 //Switch x y if loading diffusion curve xml
+#pragma inline
 static void push4Points(rapidxml::xml_node<>*& control_node, std::vector<float3>& vertices, int width, int height) {
     float3* controls_xy = new float3[4];
 
@@ -1084,28 +983,31 @@ static void correctControlPoints(float3* xy_control_points, std::vector<float3>&
 }
 
 
-static void pushSingle(rapidxml::xml_node<>* node, std::vector<uint2>& ind, std::vector<float>& us, std::vector<float>& target, const char* name,bool use_endcap) {
-    float u = (std::atof(node->first_attribute("globalID", 8)->value()) / 10.0f + (use_endcap ? 1.0f : 0.0f));
+#pragma inline
+static void pushSingle(rapidxml::xml_node<>* node, std::vector<uint2>& ind, std::vector<float>& us, std::vector<float>& target, const char* name) {
+    float u = (std::atof(node->first_attribute("globalID", 8)->value()) / 10.0f + (USE_ENDCAPS ? 1.0f : 0.0f));
     target.push_back(std::atof(node->first_attribute(name)->value()));
     us.push_back(u);
     ind.back().y++;
 }
 
+#pragma inline
 static void getBezierTangent(float t, float3* v, float3& result) {
     result.x = (3 * t * t * v[3].x + v[0].x * (-3 * t * t + 6 * t - 3) + v[1].x * (9 * t * t - 12 * t + 3) + v[2].x * (-9 * t * t + 6 * t));
     result.y = (3 * t * t * v[3].y + v[0].y * (-3 * t * t + 6 * t - 3) + v[1].y * (9 * t * t - 12 * t + 3) + v[2].y * (-9 * t * t + 6 * t));   
 }
 
 
+#pragma inline
 static void getEndcapPoints(float3& endpoint, float3& tangent, float3& point1, float3& point2,int endcap_size) {
     //get cos and sin using dot and cross product
     float tangentNormalize = invSqrt(tangent.x * tangent.x + tangent.y * tangent.y);
     float cos = tangent.y * tangentNormalize;
     float sin = tangent.x * tangentNormalize;
 
-    //use rotation matrix on points -1,1 and 1,1 to get control points
-    point1 = { (-cos - sin) * endcap_size  + endpoint.x,  (-sin + cos) * endcap_size + endpoint.y,0 };
-    point2 = { (cos - sin ) * endcap_size + endpoint.x, (sin + cos) * endcap_size + endpoint.y, 0 };
+    //use rotation matrix on points 1,-1 and 1,1 to get control points
+    point2 = { (-cos - sin) * endcap_size  + endpoint.x,  (-sin + cos) * endcap_size + endpoint.y,0 };
+    point1 = { (cos - sin ) * endcap_size + endpoint.x, (sin + cos) * endcap_size + endpoint.y, 0 };
 }
 
 //Always wanted to use this taken from wikipedia fast inverse square root
