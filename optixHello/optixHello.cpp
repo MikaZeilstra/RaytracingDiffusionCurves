@@ -10,6 +10,7 @@
 #include <cuda_runtime.h>
 #include <cuda.h>
 #include <nvrtc.h>
+#include <curand_kernel.h>
 
 
 #include "optixHello.h"
@@ -32,6 +33,8 @@
 
 
 extern "C" __host__ void setFloatDevice(float* dest, unsigned int n, float src);
+extern "C" __host__ void gaussianBlur(float4 * dest, float4 * source, float* sigma, int width, int height);
+extern "C" __host__ void setupCurand(curandState_t * states, int width, int height);
 
 extern "C" char embedded_ptx_code[];
 
@@ -55,12 +58,18 @@ const float bspline_correction_matrix[] = { 6,-7,2,0,
                                             0,2,-7,6 };
 
 int main(int argc, char* argv[]) {
-    float zoom_factor = 1   ;
+    if (argc < 3) {
+        std::cout << "Please provide a path to a diffusion curve xml and the number of rays per pixel" << std::endl;
+        return 1;    
+    }
+
+
+    float zoom_factor =  1   ;
     float offset_x = 0;
     float offset_y = 0;
-    const int number_of_rays = 255;
-    float default_weight_degree = 7;
-    const std::string file_name = "/weight_demo.xml";
+    const int number_of_rays = std::atoi(argv[2]);
+    float default_weight_degree = 0.5;
+    const std::string file_name = "/" + std::string(argv[1]);
     const float curve_width = 1e-3f;
     const float endcap_size = 8;
 
@@ -76,7 +85,7 @@ int main(int argc, char* argv[]) {
 
     int width = std::atoi(curve_set->first_attribute("image_width")->value());
     int height = std::atoi(curve_set->first_attribute("image_height")->value());
-    
+
 
     Params params{};
 
@@ -203,7 +212,7 @@ int main(int argc, char* argv[]) {
             }
 
             float3 tan = {};
-            getBezierTangent(0, first_curve, tan);
+            getBezierTangent(1e-3, first_curve, tan);
 
             tan = { -tan.x, -tan.y, tan.z };
 
@@ -255,7 +264,7 @@ int main(int argc, char* argv[]) {
             }
 
             float3 tan = {};
-            getBezierTangent(1, first_curve, tan);
+            getBezierTangent(1- 1e-3, first_curve, tan);
 
             tan = { tan.x, tan.y, tan.z };
 
@@ -453,6 +462,10 @@ int main(int argc, char* argv[]) {
     }
     
 
+    //Setup PRNG states
+    const size_t curand_size = sizeof(curandState_t) * width * height;
+    CALL_CHECK(cudaMalloc(reinterpret_cast<void**>(&params.curandStates), curand_size));
+    setupCurand(params.curandStates, width, height);
 
 
     //upload vertex data
@@ -973,8 +986,13 @@ int main(int argc, char* argv[]) {
 
         //Launch pipeline
         CALL_CHECK(optixLaunch(pipeline, stream, d_param, sizeof(Params), &sbt, width, height, 1))
-            CALL_CHECK(cudaStreamSynchronize(stream));
+        CALL_CHECK(cudaStreamSynchronize(stream));
 
+        if (USE_BLUR) {
+            gaussianBlur(params.image, params.image, params.blur_map, params.image_width, params.image_height);
+        }
+
+        CALL_CHECK(cudaDeviceSynchronize());
 
         glDrawPixels(width, height, GL_RGBA, GL_FLOAT, 0);
         cudaGraphicsUnmapResources(1, &d_pbo, NULL);
@@ -1101,7 +1119,7 @@ static void getEndcapPoints(float3& endpoint, float3& tangent, float3& point1, f
     //get cos and sin using dot and cross product
     float tangentNormalize = invSqrt(tangent.x * tangent.x + tangent.y * tangent.y);
     float cos = tangent.y * tangentNormalize;
-    float sin = tangent.x * tangentNormalize;
+    float sin = -tangent.x * tangentNormalize;
 
     //use rotation matrix on points -1,1 and 1,1 to get control points
     point1 = { (-cos - sin) * endcap_size  + endpoint.x,  (-sin + cos) * endcap_size + endpoint.y,0 };

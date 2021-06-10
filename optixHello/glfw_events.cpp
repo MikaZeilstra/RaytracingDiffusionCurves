@@ -47,8 +47,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		));
 		cudaDeviceSynchronize();
 
-		for (unsigned int i = 0; i < params->image_width; i++) {
-			for (unsigned int j = 0; j < params->image_height; j++) {
+		for (unsigned int i = 0; i < params->image_height; i++) {
+			for (unsigned int j = 0; j < params->image_width; j++) {
 				
 				final_image[ind++] = image[i * params->image_width + j].x * 255;
 				final_image[ind++] = image[i * params->image_width + j].y * 255;
@@ -65,9 +65,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		
 
 		std::ostringstream oss;
-		oss << FILE_PREFIX << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S") << ".jpg";
+		oss << FILE_PREFIX << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S") << ".png";
 
 		stbi_flip_vertically_on_write(USE_DIFFUSION_CURVE_SAVE);
+
+		//stbi_write_png(oss.str().c_str(), params->image_width, params->image_height, 4, final_image, params->image_width * 4);
+		
 		stbi_write_jpg(oss.str().c_str(), params->image_width, params->image_height, 4, final_image, params->image_width * 4);
 
 		free(image);

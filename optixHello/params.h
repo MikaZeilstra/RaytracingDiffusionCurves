@@ -1,23 +1,23 @@
 #pragma once
 #include <optix.h>
 #include <cuda_runtime.h>
+#include<curand_kernel.h>
 
 
 
 
 #define USE_DIFFUSION_CURVE_SAVE true
-#define USE_ENDCAPS              false
-#define USE_WEIGHT_INTERPOLATION false
+#define USE_BLUR true
 
 
 
 struct Params
-{
+{ 
     float4* image;
     unsigned int image_width;
     unsigned int image_height;
 
-    float* random_numbers;
+    curandState_t* curandStates;
 
     float number_of_rays_per_pixel;
     OptixTraversableHandle traversable;

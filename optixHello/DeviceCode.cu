@@ -69,22 +69,18 @@ extern "C" __global__ void __raygen__rg()
     float3 ray_direction = {};
     float weight_total = 0;
     float rot_cos, rot_sin;
+    float rot_cos_r, rot_sin_r;
 
+    sincospif(2 / params.number_of_rays_per_pixel, &rot_sin, &rot_cos);
     
 
     //Flip y axis if loading diffusion curve save
-
     ray_origin.x = ((int) (idx.x - (params.image_width / 2))) * params.zoom_factor + params.offset_x;
     ray_origin.y = USE_DIFFUSION_CURVE_SAVE ? 
         ((int) ((params.image_height - idx.y) - (params.image_height / 2))) * params.zoom_factor + params.offset_y :
         ((int) (idx.y - (params.image_height / 2))) * params.zoom_factor + params.offset_y;
     ray_origin.z = 0;
-   
 
-    //Initiate ray in random direction
-    //curandState_t state;
-    //curand_init(idx.y * params.image_width + idx.x, 0, 0, &state);
-    //sincospif(((curand(&state) % MAX_DISTRIBUTION)/(float) MAX_DISTRIBUTION) * 2, &rot_sin, &rot_cos);
     ray_direction.x = 1;
     ray_direction.y = 0;
     ray_direction.z = 0;  
@@ -93,11 +89,23 @@ extern "C" __global__ void __raygen__rg()
     
 
     for (int i = 0; i < params.number_of_rays_per_pixel; i++) {
+        sincospif((2 / params.number_of_rays_per_pixel) * curand_uniform(&params.curandStates[idx.y * params.image_width + idx.x]), &rot_sin_r, &rot_cos_r);
 
         optixTrace(
+            //Add uniformly random amount within pixel 
             params.traversable,
-            ray_origin,
-            ray_direction,
+            {
+                ray_origin.x + (curand_uniform(&params.curandStates[idx.y * params.image_width + idx.x]) * params.zoom_factor),
+                ray_origin.y + (curand_uniform(&params.curandStates[idx.y * params.image_width + idx.x]) * params.zoom_factor),
+                ray_origin.z
+            },
+            //Add uniformly random amount within angle of this sample 
+            
+            { 
+                ray_direction.x * rot_cos_r - ray_direction.y * rot_sin_r,
+                ray_direction.x * rot_sin_r + ray_direction.y * rot_cos_r,
+                0
+            },
             0.0f,
             1e16f,
             0.0f,
@@ -126,13 +134,12 @@ extern "C" __global__ void __raygen__rg()
         
 
         //Rotate Ray
-        sincospif(2 / params.number_of_rays_per_pixel, &rot_sin, &rot_cos);
-        ray_direction = { ray_direction.x * rot_cos - ray_direction.y * rot_sin,
-                        ray_direction.x * rot_sin + ray_direction.y * rot_cos,
-                        0 };
-
-
         
+        ray_direction = {
+            ray_direction.x * rot_cos - ray_direction.y * rot_sin,
+            ray_direction.x * rot_sin + ray_direction.y * rot_cos,
+            0
+        };
     }
    
     
