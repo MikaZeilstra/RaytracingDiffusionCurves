@@ -1,6 +1,6 @@
 <!DOCTYPE CurveSetXML>
 <curve_set image_width="512" image_height="512" nb_curves="1" >
- <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" use_endcap="false" >
+ <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" use_endcap="true" >
   <control_points_set>
    <control_point y="128" x="384" />
    <control_point y="128" x="128" />
@@ -31,6 +31,10 @@
 <weight globalID="7" w="1" />
    <weight globalID="10" w="1" />
   </weight_set>
+  <weight_degree_set>
+   <weight_degree globalID="0" w="0.5" />
+   <weight_degree globalID="10" w="0.5" />
+  </weight_degree_set>
  </curve>
 
 </curve_set>

@@ -12,9 +12,7 @@
 #endif // !
 
 
-static void printUChar4(uchar4* uchar);
 static void logFunction(unsigned int level, const char* tag, const char* message, void*);
-static bool loadSource(std::string& dest, const std::string& loc);
 static void pushColor(rapidxml::xml_node<>* color_node, std::vector<uint2>& ind, std::vector<float>& color_u, std::vector<float3>& color, bool use_endcap);
 static void push4Points(rapidxml::xml_node<>*&control_node, std::vector<float3>&vertices, int width, int height);
 static void correctControlPoints(float3* xy_control_points, std::vector<float3>&controls);

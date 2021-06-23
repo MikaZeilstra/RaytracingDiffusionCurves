@@ -2,10 +2,10 @@
 <curve_set image_width="512" image_height="512" nb_curves="1" >
  <curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
   <control_points_set>
-   <control_point y="256" x="128" />
-   <control_point y="128" x="236" />
-   <control_point y="384" x="256" />
-   <control_point y="256" x="128" />
+   <control_point y="256" x="384" />
+   <control_point y="512" x="128" />
+   <control_point y="0" x="128" />
+   <control_point y="256" x="384" />
 
   </control_points_set>
   <right_colors_set>
@@ -13,8 +13,34 @@
    <right_color G="0" R="255" globalID="10" B="0" />
   </right_colors_set>
   <left_colors_set>
-   <left_color G="255" R="255" globalID="0" B="0" />
-   <left_color G="0" R="255" globalID="10" B="255" />
+   <left_color G="0" R="0" globalID="0" B="0" />
+   <left_color G="0" R="0" globalID="10" B="0" />
+  </left_colors_set>
+  <blur_points_set>
+   <best_scale value="0" globalID="0" />
+   <best_scale value="0" globalID="10" />
+  </blur_points_set>
+  <weight_set>
+   <weight globalID="0" w="1" />
+   <weight globalID="10" w="1" />
+  </weight_set>
+ </curve>
+
+<curve nb_control_points="7" nb_left_colors="2" nb_right_colors="2" nb_blur_points="2" lifetime="32" >
+  <control_points_set>
+   <control_point y="256" x="384" />
+   <control_point y="256" x="512" />
+   <control_point y="256" x="514" />
+   <control_point y="256" x="516" />
+
+  </control_points_set>
+  <right_colors_set>
+   <right_color G="0" R="255" globalID="0" B="0" />
+   <right_color G="0" R="255" globalID="10" B="0" />
+  </right_colors_set>
+  <left_colors_set>
+   <left_color G="0" R="0" globalID="0" B="255" />
+   <left_color G="0" R="0" globalID="10" B="255" />
   </left_colors_set>
   <blur_points_set>
    <best_scale value="0" globalID="0" />
