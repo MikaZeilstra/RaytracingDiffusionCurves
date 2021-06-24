@@ -221,48 +221,49 @@ extern "C" __global__ void __closesthit__ch()
 
         //Increase depth by 1
         unsigned int depth = optixGetPayload_5() + 1;
-        
-        //Calculate the starting point at the end of the portal
-        float3 n_ray_origin = {};
-        int target_segment_number = params.curve_map_inverse[params.curve_connect[params.curve_map[segment_number]]] + params.curve_index[segment_number];
-        calculateSpline(segment_u, &(params.vertices[params.segmentIndices[target_segment_number]]), n_ray_origin);
-        
-        
-        //Calculate the direction out of the portal
-        float3 ray_normal = {};
-
-        //First we calculate the normal of the portal we hit
-        calculateSplineNormal(segment_u, &(params.vertices[params.segmentIndices[segment_number]]), ray_normal);
-        float ray_normal_size = sqrtf(ray_normal.x * ray_normal.x + ray_normal.y * ray_normal.y);
-        ray_normal.x /= -ray_normal_size;
-        ray_normal.y /= -ray_normal_size;
-
-        //Now we calculate the sin and cos of the angle between the ray direction and the normal of the portal
-        float ray_cos = ray_normal.x * ray_direction.x + ray_normal.y * ray_direction.y;
-        float ray_sin = ray_normal.x* ray_direction.y + ray_normal.y * ray_direction.x;
-
-        //Calculate the normal of the target portal
-        float3 target_normal = {};
-        float3 n_ray_direction = {};
-        calculateSplineNormal(segment_u, &(params.vertices[params.segmentIndices[target_segment_number]]), target_normal);
-
-        //Rotate the target normal such that it has the same angle with itself as the direction with the normal of the hit curve and use this as the new direction
-        float target_normal_size = sqrtf(target_normal.x * target_normal.x + target_normal.y * target_normal.y);
-        target_normal.x /= target_normal_size;
-        target_normal.y /= target_normal_size;
-
-        n_ray_direction.x = -(target_normal.x * ray_cos - target_normal.y * ray_sin);
-        n_ray_direction.y = target_normal.y * ray_cos + target_normal.x * ray_sin;
-        n_ray_direction.z = 0;
-  
-        
-        //Continue the ray from the new point
-
-        //Create space for the payload values p0,p1,p2 are the color, p3 is the weigth and p4 is the blur value
-        unsigned int p0, p1, p2, p3, p4;
-   
         //If we've not yet reached max trace depth shoot a continuation ray
         if (depth <= MAX_TRACE_DEPTH) {
+            //Calculate the starting point at the end of the portal
+            float3 n_ray_origin = {};
+            int target_segment_number = params.curve_map_inverse[params.curve_connect[params.curve_map[segment_number]]] + params.curve_index[segment_number];
+            calculateSpline(segment_u, &(params.vertices[params.segmentIndices[target_segment_number]]), n_ray_origin);
+        
+        
+            //Calculate the direction out of the portal
+            float3 ray_normal = {};
+
+            //First we calculate the normal of the portal we hit
+            calculateSplineNormal(segment_u, &(params.vertices[params.segmentIndices[segment_number]]), ray_normal);
+            float ray_normal_size = sqrtf(ray_normal.x * ray_normal.x + ray_normal.y * ray_normal.y);
+            ray_normal.x /= ray_normal_size;
+            ray_normal.y /= ray_normal_size;
+
+            //Now we calculate the sin and cos of the angle between the ray direction and the normal of the portal
+            float ray_cos = ray_normal.x * ray_direction.x + ray_normal.y * ray_direction.y;
+            float ray_sin = ray_normal.x* ray_direction.y + ray_normal.y * ray_direction.x;
+
+            //Calculate the normal of the target portal
+            float3 target_normal = {};
+            float3 n_ray_direction = {};
+            calculateSplineNormal(segment_u, &(params.vertices[params.segmentIndices[target_segment_number]]), target_normal);
+
+            //Rotate the target normal such that it has the same angle with itself as the direction with the normal of the hit curve and use this as the new direction
+            float target_normal_size = sqrtf(target_normal.x * target_normal.x + target_normal.y * target_normal.y);
+            target_normal.x /= target_normal_size;
+            target_normal.y /= target_normal_size;
+
+            n_ray_direction.x = target_normal.x * ray_cos - target_normal.y * ray_sin;
+            n_ray_direction.y = target_normal.y * ray_cos + target_normal.x * ray_sin;
+            n_ray_direction.z = 0;
+  
+            if (segment_number == 4) {
+                //printf("\n %d %d %f %f", segment_number, target_segment_number, ray_direction.y, n_ray_direction.y);
+            }
+
+            //Create space for the payload values p0,p1,p2 are the color, p3 is the weigth and p4 is the blur value
+            unsigned int p0, p1, p2, p3, p4;
+   
+        
             optixTrace(
                 params.traversable,
                 n_ray_origin,

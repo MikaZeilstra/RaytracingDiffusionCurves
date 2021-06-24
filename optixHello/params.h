@@ -20,7 +20,6 @@
 #include<curand_kernel.h>
 
 
-
 //Are we using diffusion curves saves ? swaps x and y axis, mirrors y axis and swaps r and b color chanels to produce correct image
 #define USE_DIFFUSION_CURVE_SAVE true
 
