@@ -1,3 +1,19 @@
+/*
+   Copyright 2021 Mika Zeilstra
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 #pragma once
 #define GLFW_INCLUDE_NONE
 
@@ -1088,6 +1104,7 @@ int main(int argc, char* argv[]) {
         denoiser_prev_output.pixelStrideInBytes = sizeof(float4);
         denoiser_prev_output.format = OPTIX_PIXEL_FORMAT_FLOAT4;
 
+        CALL_CHECK(cudaMallocAsync(reinterpret_cast<void**>(&denoiser_output_image), width * height * sizeof(float4), params.stream));
         denoiser_output.data = denoiser_output_image;
         denoiser_output.width = width;
         denoiser_output.height = height;
@@ -1103,7 +1120,7 @@ int main(int argc, char* argv[]) {
         denoiser_flow.format = OPTIX_PIXEL_FORMAT_FLOAT2;
 
         //Create space for the output of the denoiser
-        CALL_CHECK(cudaMallocAsync(reinterpret_cast<void**>(&denoiser_output_image), width * height * sizeof(float4), params.stream));
+        
         denoiser_layer.input = denoiser_input;
         denoiser_layer.previousOutput = denoiser_prev_output;
         denoiser_layer.output = denoiser_output;

@@ -25,6 +25,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# Modifications copyright (C) 2021 Mika Zeilstra
 
 # Welcome to the OptiX SDK build.  We have chosen CMake, because it can generate multiple
 # build systems for multiple architectures from a single script.  There are many resources
