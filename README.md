@@ -16,3 +16,5 @@ In the params.hpp files there are several defines which can be used to flag that
 Another define sets the maximum ray trace depth the programm should allow untill it returns a miss. Optix only allows a maximum depth of 31. But unless the connects atribute is used it should not give a perfomance penalty if set higher than 0.
 
 lastly the OptixHello.cpp file contains the initial values for the zoom, offset in x and y direction, the default weight weight exponent used if not defined, width of the diffusion curves, endcap size and lastly the mix ratio used for the denoiser. The defaults of these values should work for most images but optimizing these might give better results. 
+
+This project was the result of my bachelor thesis which can be found here https://repository.tudelft.nl/islandora/object/uuid:3e8e5679-5e05-4989-81ac-0c5569614597?collection=education.
